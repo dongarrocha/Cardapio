@@ -10,20 +10,21 @@
     header{padding:20px;text-align:center;background:#8B0000;color:white}
     header h1{margin:0;font-size:20px;letter-spacing:0.5px}
     header p{margin:6px 0 0;font-size:13px;opacity:0.95}
-    .container{max-width:900px;margin:18px auto;padding:12px}
-    .grid{display:grid;grid-template-columns:1fr 320px;gap:16px}
-    @media(max-width:820px){.grid{grid-template-columns:1fr}}
+    .container{max-width:1100px;margin:18px auto;padding:12px}
+    .layout{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    @media(max-width:980px){.layout{grid-template-columns:1fr}}
     .card{background:white;border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
-    .products{display:grid;gap:8px}
-    .product{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:8px;border:1px solid #f0f0f0}
-    .left{display:flex;gap:12px;align-items:center}
-    .name{font-weight:600}
-    .meta{font-size:13px;color:#666}
-    .actions{display:flex;gap:8px;align-items:center}
-    button, .qty-btn{background:#222;color:white;border:none;padding:8px 10px;border-radius:8px}
-    .add-btn{background:#1976d2}
-    .small{padding:6px 8px;font-size:14px}
-    .price{min-width:70px;text-align:right}
+    .section-title{display:flex;align-items:center;gap:10px;margin:10px 0 12px}
+    .grid-catalog{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    @media(max-width:900px){.grid-catalog{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:520px){.grid-catalog{grid-template-columns:1fr}}
+    .item-card{border-radius:12px;border:1px solid #eee;padding:10px;display:flex;flex-direction:column;align-items:center;min-height:220px}
+    .item-card img{width:100%;height:140px;object-fit:cover;border-radius:8px;background:#f5f5f5}
+    .no-image{width:100%;height:140px;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px}
+    .item-name{margin-top:8px;font-weight:700;text-align:center}
+    .item-meta{font-size:13px;color:#666;margin-top:4px}
+    .add-btn{margin-top:10px;background:#1976d2;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
+    /* cart */
     .cart{position:sticky;top:18px}
     .cart h3{margin:0 0 8px}
     .cart-list{max-height:420px;overflow:auto;display:flex;flex-direction:column;gap:8px}
@@ -32,38 +33,54 @@
     input[type=number], input[type=text]{padding:8px;border-radius:8px;border:1px solid #ddd}
     .controls{display:flex;gap:8px;flex-wrap:wrap}
     .note{font-size:13px;color:#555}
-    .edit-price{font-size:13px;color:#1976d2;cursor:pointer;margin-left:6px}
     footer{padding:14px;text-align:center;font-size:13px;color:#666}
     .pill{background:#f7f7f7;padding:6px 10px;border-radius:999px}
   </style>
 </head>
 <body>
   <header>
-    <h1>Peça seu Espeto 🍢 — Envie pelo WhatsApp</h1>
-    <p>Escolha os itens, confirme o total e envie o pedido direto para o WhatsApp.</p>
+    <h1>Cardápio — Espetos, Bebidas, Sobremesas e Lanches</h1>
+    <p>Toque na imagem para adicionar ao carrinho — depois envie pelo WhatsApp.</p>
   </header>
 
   <div class="container">
-    <div class="grid">
-      <div>
+    <div class="layout">
+      <main>
         <div class="card">
-          <h2 style="margin-top:0">Cardápio</h2>
-          <div class="products" id="products"></div>
+          <div class="section-title"><h2 style="margin:0">🍢 Espetos</h2></div>
+          <div class="grid-catalog" id="catalog-espetos"></div>
         </div>
 
         <div style="height:12px"></div>
 
         <div class="card">
-          <h2 style="margin-top:0">Observações / Endereço</h2>
-          <textarea id="note" rows="3" style="width:100%;border-radius:8px;border:1px solid #ddd;padding:8px" placeholder="Ex: Retirar na loja, ou endereço para entrega..."></textarea>
-          <div style="height:8px"></div>
-          <label class="note">Taxa de entrega (opcional)</label>
-          <div style="height:8px"></div>
-          <input id="deliveryFee" type="number" step="0.01" placeholder="0.00" style="width:150px" />
+          <div class="section-title"><h2 style="margin:0">🥤 Bebidas</h2></div>
+          <div class="grid-catalog" id="catalog-bebidas"></div>
         </div>
-      </div>
 
-      <aside class="cart card">
+        <div style="height:12px"></div>
+
+        <div class="card">
+          <div class="section-title"><h2 style="margin:0">🍧 Sobremesas</h2></div>
+          <div class="grid-catalog" id="catalog-sobremesas"></div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="card">
+          <div class="section-title"><h2 style="margin:0">🍔 Lanches (Pães)</h2></div>
+          <div class="grid-catalog" id="catalog-lanches"></div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="card">
+          <div class="section-title"><h2 style="margin:0">🍽️ Acompanhamentos</h2></div>
+          <div class="grid-catalog" id="catalog-acompanhamentos"></div>
+        </div>
+      </main>
+
+      <aside class="card cart">
         <div class="cart">
           <h3>Seu Pedido</h3>
           <div class="cart-list" id="cartList"></div>
@@ -73,7 +90,7 @@
             <div id="itemsTotal">0</div>
           </div>
           <div class="total-row">
-            <div>Sub‑total</div>
+            <div>Sub-total</div>
             <div id="subTotal">R$ 0,00</div>
           </div>
           <div class="total-row">
@@ -86,15 +103,25 @@
           </div>
 
           <div style="height:8px"></div>
+          <div class="card" style="padding:10px">
+            <h4 style="margin:0 0 8px">Observações / Endereço</h4>
+            <textarea id="note" rows="3" style="width:100%;border-radius:8px;border:1px solid #ddd;padding:8px" placeholder="Ex: Retirar na loja, ou endereço para entrega..."></textarea>
+            <div style="height:8px"></div>
+            <label class="note">Taxa de entrega (opcional)</label>
+            <div style="height:8px"></div>
+            <input id="deliveryFee" type="number" step="0.01" placeholder="0.00" style="width:150px" />
+          </div>
+
+          <div style="height:8px"></div>
           <div class="controls">
             <button id="whatsappBtn" class="add-btn">Enviar pelo WhatsApp</button>
-            <button id="copyBtn" class="small">Copiar mensagem</button>
+            <button id="copyBtn" class="add-btn" style="background:#555">Copiar mensagem</button>
           </div>
 
           <div style="height:10px"></div>
           <div class="pill">Número de destino: <strong id="targetNumber">+55 47 99152-9698</strong></div>
           <div style="height:8px"></div>
-          <div class="note">Dica: edite preços clicando no valor para ajustar ao seu cardápio.</div>
+          <div class="note">Ao adicionar imagens: envie para a pasta <code>imagens/</code> com os nomes mostrados abaixo.</div>
         </div>
       </aside>
     </div>
@@ -103,58 +130,122 @@
   <footer>Feito para você — modifique preços e itens conforme necessário.</footer>
 
   <script>
-    // Número (sem sinais) usado para abrir WhatsApp. Atualize se necessário.
-    const PHONE = '5547991529698'; // seu número em formato internacional sem +
+    const PHONE = '5547991529698';
 
-    // Lista inicial de produtos (nome e preço inicial)
-    const productsData = [
-      ["AÇAÍ",20], ["ACOMPANHAMENTO",5], ["ÁGUA C/ GÁS",4], ["ÁGUA S/ GÁS",4], ["BUDWEISER",12],
-      ["CALABRESA",16], ["CALDO",8], ["CARNE",18], ["CARNE C/ BACON",20], ["CARNE C/ FRANGO",19],
-      ["CARNE C/ QUEIJO",20], ["CARNE/ CALABRESA",18], ["COCA 600",8], ["COCA LATA",6], ["COCA ZERO LATA",6],
-      ["CORAÇÃO BOVINO",15], ["CORAÇÃO FGO",12], ["FANTA LATA",6], ["FRANGO",16], ["FRANGO C/ BACON",18],
-      ["FRANGO C/ QUEIJO",18], ["FRANGO/ CALABRESA",17], ["GUARANÁ LATA",6], ["HEINEKEN",10],
-      ["PÃO BOVINO",5], ["PÃO DE ALHO",6], ["PÃO DE CALABRESA",7], ["PÃO DE CORAÇÃO",6], ["PÃO ESPECIAL",8],
-      ["SUCO",7], ["MILHO",5], ["QUEIJO C/ BACON",9], ["SPATEN",12], ["QUEIJO",7], ["TRI MISTO",22],
-      ["TULIPA",10], ["UVA LATA",6]
-    ];
+    // remover acentos (usa Normalization + remoção de diacríticos)
+    function removeAccents(str){
+      return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
 
-    // State
-    const state = { products: [], cart: {} };
+    // gera nome de arquivo a partir do nome do produto:
+    //  - troca "c/" por "com "
+    //  - troca "/" por espaço
+    //  - remove acentos
+    //  - substitui espaços por '_' e coloca .png
+    function filenameFromName(name){
+      let s = name;
+      s = s.replace(/c\\//ig, 'com ');
+      s = s.replace(/\\//g, ' ');
+      s = removeAccents(s);
+      s = s.replace(/[^a-zA-Z0-9 ]/g, '');
+      s = s.trim().toLowerCase().replace(/\\s+/g, '_');
+      return s + '.png';
+    }
 
-    // Helpers
-    const money = v => 'R$ ' + Number(v || 0).toFixed(2).replace('.',',');
+    // Catálogo organizado por seção (com PÃO DE ALHO em Espetos)
+    const CATALOG = {
+      espetos: [
+        'CARNE', 'CARNE C/ BACON', 'CARNE C/ FRANGO', 'CARNE C/ QUEIJO', 'CARNE/ CALABRESA',
+        'CALABRESA', 'FRANGO', 'FRANGO C/ BACON', 'FRANGO C/ QUEIJO', 'FRANGO/ CALABRESA',
+        'CORAÇÃO BOVINO', 'CORAÇÃO FGO', 'TULIPA', 'TRI MISTO', 'PÃO DE ALHO', 'QUEIJO C/ BACON'
+      ],
+      bebidas: [
+        'COCA 600', 'COCA LATA', 'COCA ZERO LATA', 'FANTA LATA', 'GUARANÁ LATA', 'UVA LATA',
+        'HEINEKEN', 'SPATEN', 'BUDWEISER', 'SUCO', 'ÁGUA C/ GÁS', 'ÁGUA S/ GÁS'
+      ],
+      sobremesas: [ 'AÇAÍ' ],
+      lanches: [ 'PÃO BOVINO', 'PÃO DE CALABRESA', 'PÃO DE CORAÇÃO', 'PÃO ESPECIAL' ],
+      acompanhamentos: [ 'ACOMPANHAMENTO', 'MILHO', 'QUEIJO' ]
+    };
 
-    function renderProducts(){
-      const out = document.getElementById('products'); out.innerHTML = '';
-      state.products.forEach((p, idx) => {
-        const div = document.createElement('div'); div.className='product';
+    // preços iniciais (você pode ajustar depois)
+    const DEFAULT_PRICES = {
+      'CARNE':18,'CARNE_C_BACON':20,'CARNE_C_FRANGO':19,'CARNE_C_QUEIJO':20,'CARNE_CALABRESA':18,
+      'CALABRESA':16,'FRANGO':16,'FRANGO_C_BACON':18,'FRANGO_C_QUEIJO':18,'FRANGO_CALABRESA':17,
+      'CORAÇÃO_BOVINO':15,'CORAÇÃO_FGO':12,'TULIPA':10,'TRI_MISTO':22,'PÃO_DE_ALHO':6,'QUEIJO_C_BACON':9,
+      'COCA_600':8,'COCA_LATA':6,'COCA_ZERO_LATA':6,'FANTA_LATA':6,'GUARANÁ_LATA':6,'UVA_LATA':6,
+      'HEINEKEN':10,'SPATEN':12,'BUDWEISER':12,'SUCO':7,'AGUA_C_GAS':4,'AGUA_S_GAS':4,
+      'ACAI':20,'PÃO_BOVINO':5,'PÃO_DE_CALABRESA':7,'PÃO_DE_CORACAO':6,'PÃO_ESPECIAL':8,
+      'ACOMPANHAMENTO':5,'MILHO':5,'QUEIJO':7
+    };
+
+    function keyFromName(name){
+      let k = name.replace(/c\\//ig, 'com ');
+      k = k.replace(/\\//g,' ');
+      k = removeAccents(k).trim().toUpperCase().replace(/\s+/g,'_');
+      return k;
+    }
+
+    // estado do carrinho
+    const state = { cart: {} };
+
+    function money(v){ return 'R$ ' + Number(v||0).toFixed(2).replace('.',','); }
+
+    function createItemObject(name){
+      const fname = filenameFromName(name);
+      const priceKey = keyFromName(name);
+      const price = DEFAULT_PRICES[priceKey] || 0;
+      return { name, file: 'imagens/' + fname, price };
+    }
+
+    function renderSection(sectionId, items){
+      const container = document.getElementById(sectionId); container.innerHTML = '';
+      items.forEach(name => {
+        const item = createItemObject(name);
+        const div = document.createElement('div'); div.className = 'item-card';
         div.innerHTML = `
-          <div class="left">
-            <div>
-              <div class="name">${p.name}</div>
-              <div class="meta">categoria: ${p.category || 'Espetos/Bebidas'}</div>
-            </div>
+          <div class="media-wrap">
+            <img src="${item.file}" alt="${item.name}" data-file="${item.file}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <div class="no-image" style="display:none">Sem imagem<br><small style='color:#bbb'>Adicione ${item.file}</small></div>
           </div>
-          <div class="actions">
-            <div class="price" data-idx="${idx}">
-              <span class="value">${money(p.price)}</span>
-              <span class="edit-price" data-idx="${idx}">editar</span>
-            </div>
-            <button class="add-btn" data-idx="${idx}">Adicionar</button>
-          </div>
+          <div class="item-name">${item.name}</div>
+          <div class="item-meta">${money(item.price)}</div>
+          <button class="add-btn" data-name="${item.name}" data-price="${item.price}">Adicionar</button>
         `;
-        out.appendChild(div);
+        container.appendChild(div);
       });
     }
 
+    function renderAll(){
+      renderSection('catalog-espetos', CATALOG.espetos);
+      renderSection('catalog-bebidas', CATALOG.bebidas);
+      renderSection('catalog-sobremesas', CATALOG.sobremesas);
+      renderSection('catalog-lanches', CATALOG.lanches);
+      renderSection('catalog-acompanhamentos', CATALOG.acompanhamentos);
+      renderCart();
+      document.querySelectorAll('.add-btn').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const name = btn.dataset.name; const price = parseFloat(btn.dataset.price);
+          addToCart(name, price);
+        });
+      });
+    }
+
+    function addToCart(name, price){
+      const key = name;
+      if(!state.cart[key]) state.cart[key] = { name, price, qtd:0 };
+      state.cart[key].qtd++;
+      renderCart();
+    }
+
     function renderCart(){
-      const cartList = document.getElementById('cartList'); cartList.innerHTML='';
-      let sub = 0; let items = 0;
-      Object.keys(state.cart).forEach(key => {
-        const it = state.cart[key]; items += it.qtd; sub += it.qtd * it.price;
+      const cartList = document.getElementById('cartList'); cartList.innerHTML = '';
+      let sub = 0, items = 0;
+      Object.keys(state.cart).forEach(key=>{
+        const it = state.cart[key]; items += it.qtd; sub += it.qtd*it.price;
         const el = document.createElement('div'); el.className='cart-item';
         el.innerHTML = `
-          <div style="max-width:65%">${it.name} <div class="meta" style="font-size:12px;color:#666">R$ ${Number(it.price).toFixed(2).replace('.',',')} cada</div></div>
+          <div style="max-width:65%">${it.name} <div class="meta" style="font-size:12px;color:#666">${money(it.price)} cada</div></div>
           <div style="display:flex;gap:8px;align-items:center">
             <button class="qty-btn" data-op="-" data-key="${key}">-</button>
             <div>${it.qtd}</div>
@@ -164,37 +255,23 @@
         `;
         cartList.appendChild(el);
       });
-
-      const fee = parseFloat(document.getElementById('deliveryFee').value || 0);
+      const fee = parseFloat(document.getElementById('deliveryFee')?.value || 0);
       document.getElementById('itemsTotal').textContent = items;
       document.getElementById('subTotal').textContent = money(sub);
       document.getElementById('fee').textContent = money(fee);
       document.getElementById('grandTotal').textContent = money(sub + (isNaN(fee)?0:fee));
 
-      // attach events
-      document.querySelectorAll('.qty-btn').forEach(b => b.addEventListener('click', e => {
-        const key = b.dataset.key; const op = b.dataset.op;
-        if(op=='+') state.cart[key].qtd++;
-        else { state.cart[key].qtd--; if(state.cart[key].qtd<=0) delete state.cart[key]; }
+      document.querySelectorAll('.qty-btn').forEach(b=>b.addEventListener('click', ()=>{
+        const key = b.dataset.key, op = b.dataset.op;
+        if(op=='+') state.cart[key].qtd++; else { state.cart[key].qtd--; if(state.cart[key].qtd<=0) delete state.cart[key]; }
         renderCart();
       }));
-      document.querySelectorAll('[data-remove]').forEach(btn => btn.addEventListener('click', e=>{
-        delete state.cart[btn.dataset.remove]; renderCart();
-      }));
-    }
-
-    function addToCart(idx){
-      const p = state.products[idx];
-      const key = p.name;
-      if(!state.cart[key]) state.cart[key] = { name:p.name, price: p.price, qtd: 0 };
-      state.cart[key].qtd++;
-      renderCart();
+      document.querySelectorAll('[data-remove]').forEach(btn=>btn.addEventListener('click', ()=>{ delete state.cart[btn.dataset.remove]; renderCart(); }));
     }
 
     function buildMessage(){
       const lines = [];
-      lines.push('Pedido: Espetos & Bebidas');
-      lines.push('');
+      lines.push('Pedido: Espetos & Bebidas'); lines.push('');
       let sub = 0;
       Object.keys(state.cart).forEach(k=>{
         const it = state.cart[k];
@@ -202,15 +279,14 @@
         sub += it.price*it.qtd;
       });
       lines.push('');
-      lines.push('Sub‑total: R$ ' + Number(sub).toFixed(2).replace('.',','));
-      const fee = parseFloat(document.getElementById('deliveryFee').value || 0);
+      lines.push('Sub-total: R$ ' + Number(sub).toFixed(2).replace('.',','));
+      const fee = parseFloat(document.getElementById('deliveryFee')?.value || 0);
       if(fee && !isNaN(fee)) lines.push('Taxa de entrega: R$ ' + Number(fee).toFixed(2).replace('.',','));
       lines.push('Total: R$ ' + Number(sub + (isNaN(fee)?0:fee)).toFixed(2).replace('.',','));
-      const note = document.getElementById('note').value.trim();
-      if(note) { lines.push(''); lines.push('Observações:'); lines.push(note); }
-      lines.push('');
-      lines.push('---\nEnviado via Cardápio Online');
-      return lines.join('\n');
+      const note = document.getElementById('note')?.value.trim();
+      if(note){ lines.push(''); lines.push('Observações:'); lines.push(note); }
+      lines.push(''); lines.push('---\\nEnviado via Cardápio Online');
+      return lines.join('\\n');
     }
 
     function openWhatsApp(){
@@ -220,44 +296,12 @@
       window.open(url,'_blank');
     }
 
-    // Init
     (function(){
-      state.products = productsData.map(p => ({ name:p[0], price: Number(p[1]||0), category:'' }));
-      renderProducts();
-
-      // attach add buttons
-      document.getElementById('products').addEventListener('click', e=>{
-        const btn = e.target.closest('button');
-        if(!btn) return;
-        const idx = Number(btn.dataset.idx);
-        addToCart(idx);
-      });
-
-      // edit price
-      document.getElementById('products').addEventListener('click', e=>{
-        const ed = e.target.closest('.edit-price');
-        if(!ed) return;
-        const idx = Number(ed.dataset.idx);
-        const newp = prompt('Novo preço para ' + state.products[idx].name + ' (use ponto para decimal)', state.products[idx].price);
-        if(newp!==null && newp!==undefined){ const v = parseFloat(newp); if(!isNaN(v)) state.products[idx].price = v; renderProducts(); }
-      });
-
-      // delivery fee change
-      document.getElementById('deliveryFee').addEventListener('input', renderCart);
-
-      // whatsapp button
-      document.getElementById('whatsappBtn').addEventListener('click', openWhatsApp);
-
-      // copy message
-      document.getElementById('copyBtn').addEventListener('click', ()=>{
-        const msg = buildMessage(); navigator.clipboard.writeText(msg).then(()=> alert('Mensagem copiada!')); 
-      });
-
-      // Update target number display
+      renderAll();
+      document.getElementById('deliveryFee')?.addEventListener('input', renderCart);
+      document.getElementById('whatsappBtn')?.addEventListener('click', openWhatsApp);
+      document.getElementById('copyBtn')?.addEventListener('click', ()=>{ navigator.clipboard.writeText(buildMessage()).then(()=>alert('Mensagem copiada!')) });
       document.getElementById('targetNumber').textContent = '+55 47 99152-9698';
-
-      // initial cart render
-      renderCart();
     })();
   </script>
 </body>
