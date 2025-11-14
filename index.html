@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cardápio — Espetos & Bebidas</title>
+  <title>Garrocha - Cardápio</title>
   <style>
     :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#222}
     body{margin:0;background:linear-gradient(180deg,#fff 0%,#fffef8 100%);}
@@ -93,10 +93,6 @@
             <div>Sub-total</div>
             <div id="subTotal">R$ 0,00</div>
           </div>
-          <div class="total-row">
-            <div>Taxa de entrega</div>
-            <div id="fee">R$ 0,00</div>
-          </div>
           <div class="total-row" style="font-size:18px">
             <div>Total</div>
             <div id="grandTotal">R$ 0,00</div>
@@ -107,9 +103,6 @@
             <h4 style="margin:0 0 8px">Observações / Endereço</h4>
             <textarea id="note" rows="3" style="width:100%;border-radius:8px;border:1px solid #ddd;padding:8px" placeholder="Ex: Retirar na loja, ou endereço para entrega..."></textarea>
             <div style="height:8px"></div>
-            <label class="note">Taxa de entrega (opcional)</label>
-            <div style="height:8px"></div>
-            <input id="deliveryFee" type="number" step="0.01" placeholder="0.00" style="width:150px" />
           </div>
 
           <div style="height:8px"></div>
@@ -137,46 +130,32 @@
       return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 
-    // gera nome de arquivo a partir do nome do produto:
-    //  - troca "c/" por "com "
-    //  - troca "/" por espaço
-    //  - remove acentos
-    //  - substitui espaços por '_' e coloca .png
-    function filenameFromName(name){
-      let s = name;
-      s = s.replace(/c\\//ig, 'com ');
-      s = s.replace(/\\//g, ' ');
-      s = removeAccents(s);
-      s = s.replace(/[^a-zA-Z0-9 ]/g, '');
-      s = s.trim().toLowerCase().replace(/\\s+/g, '_');
-      return s + '.png';
-    }
-
     // Catálogo organizado por seção (com PÃO DE ALHO em Espetos)
     const CATALOG = {
       espetos: [
         'CARNE', 'CARNE C/ BACON', 'CARNE C/ FRANGO', 'CARNE C/ QUEIJO', 'CARNE/ CALABRESA',
         'CALABRESA', 'FRANGO', 'FRANGO C/ BACON', 'FRANGO C/ QUEIJO', 'FRANGO/ CALABRESA',
-        'CORAÇÃO BOVINO', 'CORAÇÃO FGO', 'TULIPA', 'TRI MISTO', 'PÃO DE ALHO', 'QUEIJO C/ BACON'
+        'CORAÇÃO BOVINO', 'CORAÇÃO FGO', 'TULIPA', 'TRI MISTO', 'PÃO DE ALHO', 'QUEIJO',
+        'QUEIJO C/ BACON', 'MILHO'
       ],
       bebidas: [
         'COCA 600', 'COCA LATA', 'COCA ZERO LATA', 'FANTA LATA', 'GUARANÁ LATA', 'UVA LATA',
         'HEINEKEN', 'SPATEN', 'BUDWEISER', 'SUCO', 'ÁGUA C/ GÁS', 'ÁGUA S/ GÁS'
       ],
-      sobremesas: [ 'AÇAÍ' ],
+      sobremesas: [ 'AÇAÍ', 'PUDIM' ],
       lanches: [ 'PÃO BOVINO', 'PÃO DE CALABRESA', 'PÃO DE CORAÇÃO', 'PÃO ESPECIAL' ],
-      acompanhamentos: [ 'ACOMPANHAMENTO', 'MILHO', 'QUEIJO' ]
+      acompanhamentos: [ 'ACOMPANHAMENTO' ]
     };
 
     // preços iniciais (você pode ajustar depois)
     const DEFAULT_PRICES = {
-      'CARNE':18,'CARNE_C_BACON':20,'CARNE_C_FRANGO':19,'CARNE_C_QUEIJO':20,'CARNE_CALABRESA':18,
-      'CALABRESA':16,'FRANGO':16,'FRANGO_C_BACON':18,'FRANGO_C_QUEIJO':18,'FRANGO_CALABRESA':17,
-      'CORAÇÃO_BOVINO':15,'CORAÇÃO_FGO':12,'TULIPA':10,'TRI_MISTO':22,'PÃO_DE_ALHO':6,'QUEIJO_C_BACON':9,
-      'COCA_600':8,'COCA_LATA':6,'COCA_ZERO_LATA':6,'FANTA_LATA':6,'GUARANÁ_LATA':6,'UVA_LATA':6,
-      'HEINEKEN':10,'SPATEN':12,'BUDWEISER':12,'SUCO':7,'AGUA_C_GAS':4,'AGUA_S_GAS':4,
-      'ACAI':20,'PÃO_BOVINO':5,'PÃO_DE_CALABRESA':7,'PÃO_DE_CORACAO':6,'PÃO_ESPECIAL':8,
-      'ACOMPANHAMENTO':5,'MILHO':5,'QUEIJO':7
+      'CARNE':21,'CARNE_C_BACON':22,'CARNE_C_FRANGO':20,'CARNE_C_QUEIJO':22,'CARNE_CALABRESA':20,
+      'CALABRESA':16,'FRANGO':18,'FRANGO_C_BACON':20,'FRANGO_C_QUEIJO':22,'FRANGO_CALABRESA':20,
+      'CORAÇÃO_BOVINO':15,'CORAÇÃO_FGO':12,'TULIPA':13,'TRI_MISTO':23,'PÃO_DE_ALHO':6,'QUEIJO_C_BACON':14,
+      'COCA_600':12,'COCA_LATA':7,'COCA_ZERO_LATA':7,'FANTA_LATA':7,'GUARANÁ_LATA':6,'UVA_LATA':6,
+      'HEINEKEN':12,'SPATEN':12,'BUDWEISER':12,'SUCO':12,'AGUA_C_GAS':4,'AGUA_S_GAS':4,
+      'ACAI':20,'PÃO_BOVINO':28,'PÃO_DE_CALABRESA':25,'PÃO_DE_CORACAO':23,'PÃO_ESPECIAL':30,
+      'ACOMPANHAMENTO':5,'MILHO':10,'QUEIJO':10
     };
 
     function keyFromName(name){
