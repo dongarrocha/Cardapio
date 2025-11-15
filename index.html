@@ -1,36 +1,61 @@
 <!doctype html>
 <html lang="pt-BR">
-<header>
-  <img src="imagens/garrocha.png" class="logo" alt="Garrocha logo">
-  <h1>Garrocha - Cardápio</h1>
-  <p>Toque para adicionar ao carrinho — depois envie via WhatsApp.</p>
-</header>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Garrocha - Cardápio</title>
+
   <style>
-    .logo {
-  max-width: 140px;
-  display: block;
-  margin: 0 auto 10px;
-  border-radius: 8px;
-}
     :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#222}
     body{margin:0;background:linear-gradient(180deg,#fff 0%,#fffef8 100%);}
-    header{padding:20px;text-align:center;background:#8B0000;color:white}
-    header h1{margin:0;font-size:20px;letter-spacing:0.5px}
-    header p{margin:6px 0 0;font-size:13px;opacity:0.95}
+
+    /* HEADER */
+    header{
+      padding:12px 20px;
+      background:#8B0000;
+      color:white;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    header .logo{
+      height:50px;
+      width:auto;
+      border-radius:6px;
+    }
+
+    header .title-area{
+      display:flex;
+      flex-direction:column;
+      line-height:1.2;
+    }
+
+    header h1{margin:0;font-size:18px}
+    header p{margin:2px 0 0;font-size:13px;opacity:0.95}
+
+    /* LAYOUT */
     .container{max-width:1100px;margin:18px auto;padding:12px}
     .layout{display:grid;grid-template-columns:1fr 360px;gap:18px}
     @media(max-width:980px){.layout{grid-template-columns:1fr}}
+
     .card{background:white;border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+
+    /* GRID */
     .section-title{display:flex;align-items:center;gap:10px;margin:10px 0 12px}
     .grid-catalog{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     @media(max-width:900px){.grid-catalog{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:520px){.grid-catalog{grid-template-columns:1fr}}
+
+    /* PRODUCT CARD */
     .item-card{border-radius:12px;border:1px solid #eee;padding:10px;display:flex;flex-direction:column;align-items:center;min-height:220px}
     .item-card img{width:100%;height:140px;object-fit:cover;border-radius:8px;background:#f5f5f5}
-    .no-image{width:100%;height:140px;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px;text-align:center;padding:10px}
+    .no-image{width:100%;height:140px;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;color:#999;text-align:center;font-size:13px;padding:10px}
     .item-name{margin-top:8px;font-weight:700;text-align:center}
     .item-meta{font-size:13px;color:#666;margin-top:4px}
     .add-btn{margin-top:10px;background:#1976d2;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
+
+    /* CART */
     .cart{position:sticky;top:18px}
     .cart h3{margin:0 0 8px}
     .cart-list{max-height:420px;overflow:auto;display:flex;flex-direction:column;gap:8px}
@@ -38,70 +63,81 @@
     .total-row{display:flex;justify-content:space-between;padding:12px 0;font-weight:700}
     textarea{width:100%;border-radius:8px;border:1px solid #ddd;padding:8px}
     .pill{background:#f7f7f7;padding:6px 10px;border-radius:999px}
- .mobile-cart {
-  position: fixed;
-  bottom: -60px;
-  left: 0;
-  width: 100%;
-  background: #1976d2;
-  color: white;
-  text-align: center;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 600;
-  transition: bottom 0.3s;
-  cursor: pointer;
-  z-index: 999;
-}
 
-@media(min-width: 768px){
-  .mobile-cart { display: none; }
-}  
+    /* MOBILE CART BAR */
+    .mobile-cart{
+      position:fixed;
+      bottom:-60px;
+      left:0;
+      width:100%;
+      background:#1976d2;
+      color:white;
+      text-align:center;
+      padding:14px;
+      font-size:16px;
+      font-weight:600;
+      transition:bottom .3s;
+      cursor:pointer;
+      z-index:999;
+    }
+
+    @media(min-width:768px){
+      .mobile-cart{display:none;}
+    }
   </style>
 </head>
+
 <body>
-  <header>
+
+<header>
+  <img src="imagens/garrocha.png" class="logo" alt="Garrocha">
+  <div class="title-area">
     <h1>Cardápio — Espetos, Bebidas, Sobremesas e Lanches</h1>
     <p>Toque para adicionar ao carrinho — depois envie via WhatsApp.</p>
-  </header>
-
-  <div class="container">
-    <div class="layout">
-      <main>
-        <div class="card"><div class="section-title"><h2>🍢 Espetos</h2></div><div class="grid-catalog" id="catalog-espetos"></div></div>
-        <div style="height:12px"></div>
-        <div class="card"><div class="section-title"><h2>🥤 Bebidas</h2></div><div class="grid-catalog" id="catalog-bebidas"></div></div>
-        <div style="height:12px"></div>
-        <div class="card"><div class="section-title"><h2>🍧 Sobremesas</h2></div><div class="grid-catalog" id="catalog-sobremesas"></div></div>
-        <div style="height:12px"></div>
-        <div class="card"><div class="section-title"><h2>🍔 Lanches</h2></div><div class="grid-catalog" id="catalog-lanches"></div></div>
-        <div style="height:12px"></div>
-        <div class="card"><div class="section-title"><h2>🍽️ Acompanhamentos</h2></div><div class="grid-catalog" id="catalog-acompanhamentos"></div></div>
-      </main>
-
-      <aside class="card cart">
-        <h3>Seu Pedido</h3>
-        <div class="cart-list" id="cartList"></div>
-
-        <div class="total-row"><span>Total itens</span><span id="itemsTotal">0</span></div>
-        <div class="total-row"><span>Sub-total</span><span id="subTotal">R$ 0,00</span></div>
-        <div class="total-row" style="font-size:18px"><span>Total</span><span id="grandTotal">R$ 0,00</span></div>
-
-        <textarea id="note" rows="3" placeholder="Endereço ou observações..."></textarea>
-
-        <button id="whatsappBtn" class="add-btn">Enviar via WhatsApp</button>
-        <button id="copyBtn" class="add-btn" style="background:#444">Copiar pedido</button>
-
-        <div class="pill">📞 +55 47 99152-9698</div>
-      </aside>
-    </div>
   </div>
+</header>
+
+<div class="container">
+  <div class="layout">
+    <main>
+      <div class="card"><div class="section-title"><h2>🍢 Espetos</h2></div><div class="grid-catalog" id="catalog-espetos"></div></div>
+      <div style="height:12px"></div>
+      <div class="card"><div class="section-title"><h2>🥤 Bebidas</h2></div><div class="grid-catalog" id="catalog-bebidas"></div></div>
+      <div style="height:12px"></div>
+      <div class="card"><div class="section-title"><h2>🍧 Sobremesas</h2></div><div class="grid-catalog" id="catalog-sobremesas"></div></div>
+      <div style="height:12px"></div>
+      <div class="card"><div class="section-title"><h2>🍔 Lanches</h2></div><div class="grid-catalog" id="catalog-lanches"></div></div>
+      <div style="height:12px"></div>
+      <div class="card"><div class="section-title"><h2>🍽️ Acompanhamentos</h2></div><div class="grid-catalog" id="catalog-acompanhamentos"></div></div>
+    </main>
+
+    <aside class="card cart">
+      <h3>Seu Pedido</h3>
+      <div class="cart-list" id="cartList"></div>
+
+      <div class="total-row"><span>Total itens</span><span id="itemsTotal">0</span></div>
+      <div class="total-row"><span>Sub-total</span><span id="subTotal">R$ 0,00</span></div>
+      <div class="total-row" style="font-size:18px"><span>Total</span><span id="grandTotal">R$ 0,00</span></div>
+
+      <textarea id="note" rows="3" placeholder="Endereço ou observações..."></textarea>
+
+      <button id="whatsappBtn" class="add-btn">Enviar via WhatsApp</button>
+      <button id="copyBtn" class="add-btn" style="background:#444">Copiar pedido</button>
+
+      <div class="pill">📞 +55 47 99152-9698</div>
+    </aside>
+  </div>
+</div>
+
+<!-- MOBILE CART -->
+<div id="mobileBar" class="mobile-cart" onclick="scrollToCart()">
+  🛒 <span id="mobileItems">0</span> itens — <span id="mobileTotal">R$ 0,00</span> | Ver Pedido
+</div>
 
 <script>
-const PHONE = '5547991529698';
+const PHONE='5547991529698';
 
-// catálogo organizado
-const CATALOG = {
+const CATALOG={
   espetos:['CARNE','CARNE C BACON','CARNE E FRANGO','CARNE C QUEIJO','CARNE E CALABRESA','CALABRESA','FRANGO','FRANGO C BACON','FRANGO C QUEIJO','FRANGO E CALABRESA','CORAÇÃO BOVINO','CORAÇÃO FGO','TULIPA','TRI MISTO','PÃO DE ALHO','QUEIJO','QUEIJO C BACON','MILHO'],
   bebidas:['COCA 600','COCA LATA','COCA ZERO LATA','FANTA LATA','GUARANÁ LATA','UVA LATA','HEINEKEN','SPATEN','BUDWEISER','SUCO CUPUAÇU','SUCO ACEROLA','SUCO GRAVIOLA','SUCO MARACUJÁ','ÁGUA C GÁS','ÁGUA S GÁS'],
   sobremesas:['AÇAÍ','PUDIM'],
@@ -109,61 +145,21 @@ const CATALOG = {
   acompanhamentos:['ARROZ VINAGRETE E FAROFA','CALDO DE AIPIM CALABRESA E BACON','TALHARIM']
 };
 
-const DEFAULT_PRICES={
-'CARNE':21,'CARNE_COM_BACON':22,'CARNE_COM_FRANGO':20,'CARNE_C_QUEIJO':22,'CARNE_CALABRESA':20,'CALABRESA':16,'FRANGO':18,'FRANGO_C_BACON':20,'FRANGO_C_QUEIJO':22,'FRANGO_CALABRESA':20,'CORACAO_BOVINO':15,'CORAÇAO_FGO':12,'TULIPA':13,'TRI_MISTO':23,'PAO_DE_ALHO':6,'QUEIJO_C_BACON':14,'COCA_600':12,'COCA_LATA':7,'COCA_ZERO_LATA':7,'FANTA_LATA':7,'GUARANA_LATA':6,'UVA_LATA':6,'HEINEKEN':12,'SPATEN':12,'BUDWEISER':12,'SUCO':12,'AGUA_C_GAS':4,'AGUA_S_GAS':4,'ACAI':20,'PAO_BOVINO':28,'PAO_DE_CALABRESA':25,'PAO_DE_CORACAO':23,'PAO_ESPECIAL':30,'MILHO':10,'QUEIJO':10,'PUDIM':15,'SUCO CUPUAÇU':15,'SUCO ACEROLA':15,'SUCO GRAVIOLA':15,'SUCO MARACUJÁ':15,'ARROZ VINAGRETE E FAROFA':5,'CALDO DE AIPIM CALABRESA E BACON':15,'TALHARIM':15};
-
-function removeAccents(str){
-  return str.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-}
-
-// verificador de imagem no GitHub
-function imageExists(url){
-  const xhr=new XMLHttpRequest();
-  xhr.open("HEAD",url,false);
-  xhr.send();
-  return xhr.status!==404;
-}
-
-// gera nome do arquivo baseado no nome real do item
-function filenameFromName(name){
-  const clean = removeAccents(name).toLowerCase().replace(/\//g,' ').trim();
-  const formats=["jpg","jpeg","png","webp","avif"];
-  for(let ext of formats){
-    if(imageExists(`imagens/${clean}.${ext}`)) return `${clean}.${ext}`;
-  }
-  return null;
-}
-
-function keyFromName(name){return removeAccents(name).toUpperCase().replace(/\W+/g,'_');}
 function money(v){return 'R$ '+Number(v||0).toFixed(2).replace('.',',');}
 
 const state={cart:{}};
 
-function createItemObject(name){
-  return {
-    name,
-    file: filenameFromName(name),
-    price: DEFAULT_PRICES[keyFromName(name)]||0
-  };
-}
-
-function renderSection(sectionId,items){
-  const div=document.getElementById(sectionId);
+function renderSection(id,items){
+  const div=document.getElementById(id);
   div.innerHTML='';
   items.forEach(name=>{
-    const item=createItemObject(name);
     div.innerHTML+=`
       <div class="item-card">
-        ${
-          item.file
-          ? `<img src="imagens/${item.file}" alt="${item.name}">`
-          : `<div class="no-image">Sem imagem<br><small>${name}</small></div>`
-        }
+        <div class="no-image">Sem imagem<br><small>${name}</small></div>
         <div class="item-name">${name}</div>
-        <div class="item-meta">${money(item.price)}</div>
-        <button class="add-btn" onclick="addToCart('${name}',${item.price})">Adicionar</button>
-      </div>
-    `;
+        <div class="item-meta">${money(0)}</div>
+        <button class="add-btn" onclick="addToCart('${name}',0)">Adicionar</button>
+      </div>`;
   });
 }
 
@@ -180,58 +176,34 @@ function renderCart(){
 
   Object.values(state.cart).forEach(it=>{
     total+=it.price*it.qtd; items+=it.qtd;
-    list.innerHTML+=`
-      <div class="cart-item">
-        ${it.name} x${it.qtd}
-        <button onclick="removeItem('${it.name}')">❌</button>
-      </div>`;
+    list.innerHTML+=`<div class="cart-item">${it.name} x${it.qtd}<button onclick="removeItem('${it.name}')">❌</button></div>`;
   });
 
-  document.getElementById('itemsTotal').innerText = items;
-document.getElementById('subTotal').innerText = money(total);
-document.getElementById('grandTotal').innerText = money(total);
+  document.getElementById('itemsTotal').innerText=items;
+  document.getElementById('subTotal').innerText=money(total);
+  document.getElementById('grandTotal').innerText=money(total);
 
-// mobile update
-document.getElementById('mobileItems').innerText = items;
-document.getElementById('mobileTotal').innerText = money(total);
+  document.querySelector("#mobileItems").textContent = items;
+  document.querySelector("#mobileTotal").textContent = money(total);
 
-const bar = document.getElementById('mobileBar');
-if(items > 0){
-  bar.style.bottom = "0px";
-} else {
-  bar.style.bottom = "-60px";
-}
-function removeItem(name){
-  delete state.cart[name];
-  renderCart();
+  document.getElementById("mobileBar").style.bottom = items>0 ? "0" : "-60px";
 }
 
-function buildMessage(){
-  let msg="Pedido Garrocha:%0A%0A";
-  Object.values(state.cart).forEach(it=>{
-    msg+=`- ${it.name} x${it.qtd} (%20${money(it.price*it.qtd)})%0A`;
-  });
-  msg+=`%0ATotal: ${document.getElementById('grandTotal').innerText}%0A`;
-  msg+=`%0AObs: ${document.getElementById('note').value}`;
-  return msg;
+function removeItem(name){delete state.cart[name]; renderCart();}
+
+function scrollToCart(){
+  document.querySelector('.cart').scrollIntoView({behavior:'smooth'});
 }
 
-document.getElementById('whatsappBtn').onclick=()=>window.open(`https://wa.me/${PHONE}?text=${buildMessage()}`);
-document.getElementById('copyBtn').onclick=()=>navigator.clipboard.writeText(buildMessage());
+document.getElementById('whatsappBtn').onclick=()=>window.open(`https://wa.me/${PHONE}?text=Pedido%20Garrocha`);
+document.getElementById('copyBtn').onclick=()=>navigator.clipboard.writeText("Pedido copiado!");
 
-(function(){  
-  renderSection('catalog-espetos',CATALOG.espetos);
-  renderSection('catalog-bebidas',CATALOG.bebidas);
-  renderSection('catalog-sobremesas',CATALOG.sobremesas);
-  renderSection('catalog-lanches',CATALOG.lanches);
-  renderSection('catalog-acompanhamentos',CATALOG.acompanhamentos);
-})();
-  function scrollToCart(){
-  document.querySelector('.cart').scrollIntoView({behavior:"smooth"});
-}
+renderSection('catalog-espetos',CATALOG.espetos);
+renderSection('catalog-bebidas',CATALOG.bebidas);
+renderSection('catalog-sobremesas',CATALOG.sobremesas);
+renderSection('catalog-lanches',CATALOG.lanches);
+renderSection('catalog-acompanhamentos',CATALOG.acompanhamentos);
 </script>
-  <div id="mobileBar" class="mobile-cart" onclick="scrollToCart()">
-  🛒 <span id="mobileItems">0</span> itens — <span id="mobileTotal">R$ 0,00</span> | Ver Pedido
-</div>
+
 </body>
 </html>
