@@ -4,188 +4,191 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Garrocha - Cardápio</title>
-
   <style>
-    body { margin:0; font-family:system-ui; background:#f5f5f5; }
-
-    header{
-      background:#8B0000;
-      padding:12px;
-      color:white;
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-
-    header img{
-      width:60px;
-      border-radius:6px;
-    }
-
-    h2{ margin:20px 10px; }
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-      gap:16px;
-      padding:10px;
-    }
-
-    .item{
-      background:white;
-      border-radius:10px;
-      padding:10px;
-      text-align:center;
-      border:1px solid #ddd;
-    }
-
-    .item img{
-      width:100%;
-      height:160px;
-      object-fit:cover;
-      border-radius:8px;
-      background:#eee;
-    }
-
-    .btn{
-      background:#1976d2;
-      color:white;
-      padding:10px;
-      width:100%;
-      border:none;
-      border-radius:6px;
-      cursor:pointer;
-      margin-top:10px;
-    }
-
-    .cart{
-      background:white;
-      padding:20px;
-      position:fixed;
-      right:0;
-      top:0;
-      width:280px;
-      height:100%;
-      border-left:3px solid #1976d2;
-      overflow:auto;
-    }
-
-    .mobile-cart {
-      position: fixed;
-      bottom: -60px;
-      left: 0;
-      width: 100%;
-      background: #1976d2;
-      color: white;
-      text-align: center;
-      padding: 14px;
-      font-size: 16px;
-      font-weight: 600;
-      transition: bottom 0.3s;
-      cursor: pointer;
-      z-index: 999;
-    }
-
-    @media(min-width: 768px){
-      .mobile-cart { display: none; }
-    }
+    :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#222}
+    body{margin:0;background:linear-gradient(180deg,#fff 0%,#fffef8 100%);}
+    header{padding:20px;text-align:center;background:#8B0000;color:white}
+    header h1{margin:0;font-size:20px;letter-spacing:0.5px}
+    header p{margin:6px 0 0;font-size:13px;opacity:0.95}
+    .container{max-width:1100px;margin:18px auto;padding:12px}
+    .layout{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    @media(max-width:980px){.layout{grid-template-columns:1fr}}
+    .card{background:white;border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+    .section-title{display:flex;align-items:center;gap:10px;margin:10px 0 12px}
+    .grid-catalog{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    @media(max-width:900px){.grid-catalog{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:520px){.grid-catalog{grid-template-columns:1fr}}
+    .item-card{border-radius:12px;border:1px solid #eee;padding:10px;display:flex;flex-direction:column;align-items:center;min-height:220px}
+    .item-card img{width:100%;height:140px;object-fit:cover;border-radius:8px;background:#f5f5f5}
+    .no-image{width:100%;height:140px;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px;text-align:center;padding:10px}
+    .item-name{margin-top:8px;font-weight:700;text-align:center}
+    .item-meta{font-size:13px;color:#666;margin-top:4px}
+    .add-btn{margin-top:10px;background:#1976d2;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
+    .cart{position:sticky;top:18px}
+    .cart h3{margin:0 0 8px}
+    .cart-list{max-height:420px;overflow:auto;display:flex;flex-direction:column;gap:8px}
+    .cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;border:1px dashed #eee}
+    .total-row{display:flex;justify-content:space-between;padding:12px 0;font-weight:700}
+    textarea{width:100%;border-radius:8px;border:1px solid #ddd;padding:8px}
+    .pill{background:#f7f7f7;padding:6px 10px;border-radius:999px}
   </style>
 </head>
-
 <body>
+  <header>
+    <h1>Cardápio — Espetos, Bebidas, Sobremesas e Lanches</h1>
+    <p>Toque para adicionar ao carrinho — depois envie via WhatsApp.</p>
+  </header>
 
-<header>
-  <img src="imagens/garrocha.png" alt="Logo Garrocha">
-  <div>
-    <strong>Cardápio — Espetos, Bebidas, Sobremesas e Lanches</strong><br>
-    <small>Toque para adicionar ao carrinho — depois envie via WhatsApp.</small>
+  <div class="container">
+    <div class="layout">
+      <main>
+        <div class="card"><div class="section-title"><h2>🍢 Espetos</h2></div><div class="grid-catalog" id="catalog-espetos"></div></div>
+        <div style="height:12px"></div>
+        <div class="card"><div class="section-title"><h2>🥤 Bebidas</h2></div><div class="grid-catalog" id="catalog-bebidas"></div></div>
+        <div style="height:12px"></div>
+        <div class="card"><div class="section-title"><h2>🍧 Sobremesas</h2></div><div class="grid-catalog" id="catalog-sobremesas"></div></div>
+        <div style="height:12px"></div>
+        <div class="card"><div class="section-title"><h2>🍔 Lanches</h2></div><div class="grid-catalog" id="catalog-lanches"></div></div>
+        <div style="height:12px"></div>
+        <div class="card"><div class="section-title"><h2>🍽️ Acompanhamentos</h2></div><div class="grid-catalog" id="catalog-acompanhamentos"></div></div>
+      </main>
+
+      <aside class="card cart">
+        <h3>Seu Pedido</h3>
+        <div class="cart-list" id="cartList"></div>
+
+        <div class="total-row"><span>Total itens</span><span id="itemsTotal">0</span></div>
+        <div class="total-row"><span>Sub-total</span><span id="subTotal">R$ 0,00</span></div>
+        <div class="total-row" style="font-size:18px"><span>Total</span><span id="grandTotal">R$ 0,00</span></div>
+
+        <textarea id="note" rows="3" placeholder="Endereço ou observações..."></textarea>
+
+        <button id="whatsappBtn" class="add-btn">Enviar via WhatsApp</button>
+        <button id="copyBtn" class="add-btn" style="background:#444">Copiar pedido</button>
+
+        <div class="pill">📞 +55 47 99152-9698</div>
+      </aside>
+    </div>
   </div>
-</header>
-
-<h2>Espetos</h2>
-
-<div id="menu" class="grid"></div>
-
-<div class="cart">
-  <h3>Seu Pedido</h3>
-  <p>Total itens: <span id="itemsTotal">0</span></p>
-  <p>Valor total: <span id="grandTotal">R$ 0,00</span></p>
-
-  <br>
-  <button class="btn" onclick="sendWhatsApp()">Enviar pelo WhatsApp 📲</button>
-</div>
-
-<div id="mobileBar" class="mobile-cart" onclick="scrollToCart()">
-  🛒 <span id="mobileItems">0</span> itens — <span id="mobileTotal">R$ 0,00</span> | Ver Pedido
-</div>
-
 
 <script>
-const money = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const PHONE = '5547991529698';
 
-const menu = [
-  { nome:"Carne", preco:21, imagem:"imagens/carne.png" },
-  { nome:"Carne c Bacon", preco:22, imagem:"imagens/carne_bacon.png" },
-  { nome:"Carne e Frango", preco:20, imagem:"imagens/carne_frango.png" },
-  { nome:"Coração Boi", preco:18, imagem:"imagens/coracao.png" },
-  { nome:"Frango", preco:17, imagem:"imagens/frango.png" },
-  { nome:"Linguiça", preco:15, imagem:"imagens/linguica.png" }
-];
+// catálogo organizado
+const CATALOG = {
+  espetos:['CARNE','CARNE C BACON','CARNE E FRANGO','CARNE C QUEIJO','CARNE E CALABRESA','CALABRESA','FRANGO','FRANGO C BACON','FRANGO C QUEIJO','FRANGO E CALABRESA','CORAÇÃO BOVINO','CORAÇÃO FGO','TULIPA','TRI MISTO','PÃO DE ALHO','QUEIJO','QUEIJO C BACON','MILHO'],
+  bebidas:['COCA 600','COCA LATA','COCA ZERO LATA','FANTA LATA','GUARANÁ LATA','UVA LATA','HEINEKEN','SPATEN','BUDWEISER','SUCO CUPUAÇU','SUCO ACEROLA','SUCO GRAVIOLA','SUCO MARACUJÁ','ÁGUA C GÁS','ÁGUA S GÁS'],
+  sobremesas:['AÇAÍ','PUDIM'],
+  lanches:['PÃO BOVINO','PÃO DE CALABRESA','PÃO DE CORAÇÃO','PÃO ESPECIAL'],
+  acompanhamentos:['ARROZ VINAGRETE E FAROFA','CALDO DE AIPIM CALABRESA E BACON','TALHARIM']
+};
 
-let cart = [];
+const DEFAULT_PRICES={
+'CARNE':21,'CARNE_COM_BACON':22,'CARNE_COM_FRANGO':20,'CARNE_C_QUEIJO':22,'CARNE_CALABRESA':20,'CALABRESA':16,'FRANGO':18,'FRANGO_C_BACON':20,'FRANGO_C_QUEIJO':22,'FRANGO_CALABRESA':20,'CORACAO_BOVINO':15,'CORAÇAO_FGO':12,'TULIPA':13,'TRI_MISTO':23,'PAO_DE_ALHO':6,'QUEIJO_C_BACON':14,'COCA_600':12,'COCA_LATA':7,'COCA_ZERO_LATA':7,'FANTA_LATA':7,'GUARANA_LATA':6,'UVA_LATA':6,'HEINEKEN':12,'SPATEN':12,'BUDWEISER':12,'SUCO':12,'AGUA_C_GAS':4,'AGUA_S_GAS':4,'ACAI':20,'PAO_BOVINO':28,'PAO_DE_CALABRESA':25,'PAO_DE_CORACAO':23,'PAO_ESPECIAL':30,'MILHO':10,'QUEIJO':10,'PUDIM':15,'SUCO CUPUAÇU':15,'SUCO ACEROLA':15,'SUCO GRAVIOLA':15,'SUCO MARACUJÁ':15,'ARROZ VINAGRETE E FAROFA':5,'CALDO DE AIPIM CALABRESA E BACON':15,'TALHARIM':15};
 
-function renderMenu(){
-  const div = document.getElementById("menu");
-  div.innerHTML = "";
-  menu.forEach((p,i)=>{
-    div.innerHTML += `
-      <div class="item">
-        <img src="${p.imagem}" onerror="this.src='https://via.placeholder.com/200?text=Sem+Imagem'">
-        <h4>${p.nome}</h4>
-        <p>${money(p.preco)}</p>
-        <button class="btn" onclick="add(${i})">Adicionar</button>
+function removeAccents(str){
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
+function imageExists(url){
+  const xhr=new XMLHttpRequest();
+  xhr.open("HEAD",url,false);
+  xhr.send();
+  return xhr.status!==404;
+}
+
+function filenameFromName(name){
+  const clean = removeAccents(name).toLowerCase().replace(/\//g,' ').trim();
+  const formats=["jpg","jpeg","png","webp","avif"];
+  for(let ext of formats){
+    if(imageExists(`imagens/${clean}.${ext}`)) return `${clean}.${ext}`;
+  }
+  return null;
+}
+
+function keyFromName(name){return removeAccents(name).toUpperCase().replace(/\W+/g,'_');}
+function money(v){return 'R$ '+Number(v||0).toFixed(2).replace('.',',');}
+
+const state={cart:{}};
+
+function createItemObject(name){
+  return {
+    name,
+    file: filenameFromName(name),
+    price: DEFAULT_PRICES[keyFromName(name)]||0
+  };
+}
+
+function renderSection(sectionId,items){
+  const div=document.getElementById(sectionId);
+  div.innerHTML='';
+  items.forEach(name=>{
+    const item=createItemObject(name);
+    div.innerHTML+=`
+      <div class="item-card">
+        ${
+          item.file
+          ? `<img src="imagens/${item.file}" alt="${item.name}">`
+          : `<div class="no-image">Sem imagem<br><small>${name}</small></div>`
+        }
+        <div class="item-name">${name}</div>
+        <div class="item-meta">${money(item.price)}</div>
+        <button class="add-btn" onclick="addToCart('${name}',${item.price})">Adicionar</button>
       </div>
     `;
   });
 }
 
-function add(i){
-  cart.push(menu[i]);
+function addToCart(name,price){
+  if(!state.cart[name]) state.cart[name]={name,price,qtd:0};
+  state.cart[name].qtd++;
   renderCart();
 }
 
 function renderCart(){
-  document.getElementById("itemsTotal").innerText = cart.length;
-  
-  const total = cart.reduce((s,p)=>s+p.preco,0);
-  document.getElementById("grandTotal").innerText = money(total);
+  const list=document.getElementById('cartList');
+  list.innerHTML='';
+  let total=0,items=0;
 
-  // mobile bar update
-  document.getElementById("mobileItems").innerText = cart.length;
-  document.getElementById("mobileTotal").innerText = money(total);
+  Object.values(state.cart).forEach(it=>{
+    total+=it.price*it.qtd; items+=it.qtd;
+    list.innerHTML+=`
+      <div class="cart-item">
+        ${it.name} x${it.qtd}
+        <button onclick="removeItem('${it.name}')">❌</button>
+      </div>`;
+  });
 
-  const bar=document.getElementById("mobileBar");
-  bar.style.bottom = (cart.length>0) ? "0px" : "-60px";
+  document.getElementById('itemsTotal').innerText=items;
+  document.getElementById('subTotal').innerText=money(total);
+  document.getElementById('grandTotal').innerText=money(total);
 }
 
-function scrollToCart(){
-  document.querySelector(".cart").scrollIntoView({behavior:"smooth"});
+function removeItem(name){
+  delete state.cart[name];
+  renderCart();
 }
 
-function sendWhatsApp(){
-  if(cart.length===0) return alert("Carrinho vazio!");
-
-  let msg="Pedido Garrocha:\n\n";
-  cart.forEach(i=> msg+=`🟢 ${i.nome} - ${money(i.preco)}\n`);
-  
-  msg+=`\nTOTAL: ${document.getElementById("grandTotal").innerText}`;
-  
-  window.open(`https://wa.me/55?text=${encodeURIComponent(msg)}`);
+function buildMessage(){
+  let msg="Pedido Garrocha:%0A%0A";
+  Object.values(state.cart).forEach(it=>{
+    msg+=`- ${it.name} x${it.qtd} (%20${money(it.price*it.qtd)})%0A`;
+  });
+  msg+=`%0ATotal: ${document.getElementById('grandTotal').innerText}%0A`;
+  msg+=`%0AObs: ${document.getElementById('note').value}`;
+  return msg;
 }
 
-renderMenu();
-renderCart();
+document.getElementById('whatsappBtn').onclick=()=>window.open(`https://wa.me/${PHONE}?text=${buildMessage()}`);
+document.getElementById('copyBtn').onclick=()=>navigator.clipboard.writeText(buildMessage());
+
+(function(){  
+  renderSection('catalog-espetos',CATALOG.espetos);
+  renderSection('catalog-bebidas',CATALOG.bebidas);
+  renderSection('catalog-sobremesas',CATALOG.sobremesas);
+  renderSection('catalog-lanches',CATALOG.lanches);
+  renderSection('catalog-acompanhamentos',CATALOG.acompanhamentos);
+})();
 </script>
-
 </body>
 </html>
