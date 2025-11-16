@@ -96,7 +96,7 @@ const INDISPONIVEIS = ['AÇAÍ','SUCO CUPUAÇU'];
 
 const CATALOG = {
   espetos:['CARNE','CARNE C BACON','CARNE E FRANGO','CARNE C QUEIJO','CARNE E CALABRESA','CALABRESA','FRANGO','FRANGO C BACON','FRANGO C QUEIJO','FRANGO E CALABRESA','CORAÇÃO BOVINO','CORAÇÃO FGO','TULIPA','TRI MISTO','PÃO DE ALHO','QUEIJO','QUEIJO C BACON','MILHO'],
-  bebidas:['COCA 600','COCA LATA','COCA ZERO LATA','FANTA LATA','GUARANÁ LATA','UVA LATA','HEINEKEN','SPATEN','BUDWEISER','SUCO CUPUAÇU','SUCO ACEROLA','SUCO GRAVIOLA','SUCO MARACUJÁ','ÁGUA C GÁS','ÁGUA S GÁS'],
+  bebidas:['SUCO CUPUAÇU','SUCO ACEROLA','SUCO GRAVIOLA','SUCO MARACUJÁ','COCA 600','COCA LATA','COCA ZERO LATA','FANTA LATA','GUARANÁ LATA','UVA LATA','HEINEKEN','SPATEN','BUDWEISER','ÁGUA C GÁS','ÁGUA S GÁS'],
   sobremesas:['AÇAÍ','PUDIM'],
   lanches:['PÃO BOVINO','PÃO DE CALABRESA','PÃO DE CORAÇÃO','PÃO ESPECIAL'],
   massas:['TALHARIM FGO','TALHARIM 4 QUEIJO','TALHARIM CARNE'],
@@ -207,6 +207,7 @@ document.getElementById('copyBtn').onclick=()=>navigator.clipboard.writeText(bui
   renderSection('catalog-espetos',CATALOG.espetos);
   renderSection('catalog-bebidas',CATALOG.bebidas);
   renderSection('catalog-sobremesas',CATALOG.sobremesas);
+  renderSection('catalog-sobremesas',CATALOG.massas);
   renderSection('catalog-lanches',CATALOG.lanches);
   renderSection('catalog-acompanhamentos',CATALOG.acompanhamentos);
 })();
