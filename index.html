@@ -8,7 +8,23 @@
     :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#222}
     body{margin:0;background:linear-gradient(180deg,#fff 0%,#fffef8 100%);}
 
-    header{padding:20px;text-align:center;background:#8B0000;color:white}
+    header{
+      padding:20px;
+      background:#8B0000;
+      color:white;
+      position:relative;
+      text-align:center;
+    }
+
+    /* LOGO NO CANTO ESQUERDO */
+    .logo{
+      position:absolute;
+      top:10px;
+      left:20px;
+      height:50px;
+      width:auto;
+    }
+
     header h1{margin:0;font-size:20px;letter-spacing:0.5px}
     header p{margin:6px 0 0;font-size:13px;opacity:0.95}
 
@@ -42,7 +58,9 @@
   </style>
 </head>
 <body>
+
   <header>
+    <img src="imagens/garrocha.png" alt="Garrocha" class="logo">
     <h1>Cardápio — Espetos, Bebidas, Sobremesas e Lanches</h1>
     <p>Toque para adicionar ao carrinho — depois envie via WhatsApp.</p>
   </header>
@@ -152,7 +170,7 @@ function renderSection(sectionId, items){
         ${
           item.file
           ? `<img src="imagens/${item.file}" alt="${item.name}" style="${unavailable?'filter:grayscale(100%)':''}">`
-          : `<div class="no-image">${/* mostra label do nome se sem imagem */''}<div style="font-weight:700;margin-bottom:6px">${name}</div><small>Sem imagem</small></div>`
+          : `<div class="no-image"><div style="font-weight:700;margin-bottom:6px">${name}</div><small>Sem imagem</small></div>`
         }
         <div class="item-name" style="${unavailable?'text-decoration:line-through;color:#999':''}">${name}</div>
         <div class="item-meta">${unavailable?'❌ Indisponível':money(item.price)}</div>
