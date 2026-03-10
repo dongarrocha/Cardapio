@@ -1,321 +1,246 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Garrocha - Cardápio</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Garrocha Cardápio</title>
 
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#222}
-body{margin:0;background:linear-gradient(180deg,#fff 0%,#fffef8 100%)}
+
+body{
+margin:0;
+font-family:Arial;
+background:#f4f4f4;
+}
 
 header{
-padding:20px;
 background:#8B0000;
 color:white;
-position:relative;
-text-align:center
+padding:15px;
+text-align:center;
+font-size:20px;
+font-weight:bold;
 }
 
-.logo{
-position:absolute;
-top:10px;
-left:20px;
-height:50px
+.container{
+padding:15px;
+max-width:900px;
+margin:auto;
 }
 
-.container{max-width:1100px;margin:18px auto;padding:12px}
-.layout{display:grid;grid-template-columns:1fr 360px;gap:18px}
+.categoria{
+margin-bottom:30px;
+}
 
-@media(max-width:980px){
-.layout{grid-template-columns:1fr}
+.categoria h2{
+margin-bottom:10px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
 }
 
 .card{
+
 background:white;
-border-radius:12px;
-padding:12px;
-box-shadow:0 6px 18px rgba(0,0,0,0.06)
-}
-
-.grid-catalog{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px
-}
-
-@media(max-width:900px){
-.grid-catalog{grid-template-columns:repeat(2,1fr)}
-}
-
-@media(max-width:520px){
-.grid-catalog{grid-template-columns:1fr}
-}
-
-.item-card{
-border-radius:12px;
-border:1px solid #eee;
-padding:10px;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
 display:flex;
 flex-direction:column;
-align-items:center
+
 }
 
-.item-card img{
+.card img,
+.card video{
 width:100%;
-height:140px;
+height:150px;
 object-fit:cover;
-border-radius:8px
 }
 
-.no-image{
-width:100%;
-height:140px;
-border-radius:8px;
-background:#f5f5f5;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#999;
-font-size:13px;
-text-align:center
+.info{
+padding:10px;
 }
 
-.item-name{
-margin-top:8px;
-font-weight:700;
-text-align:center
+.nome{
+font-weight:bold;
 }
 
-.item-meta{
-font-size:13px;
-color:#666;
-margin-top:4px
+.preco{
+color:#555;
+margin:5px 0;
 }
 
-.add-btn{
-margin-top:10px;
+button{
+
 background:#1976d2;
-color:#fff;
 border:none;
-padding:8px 12px;
-border-radius:8px;
-cursor:pointer
-}
-
-.cart{
-position:sticky;
-top:18px
-}
-
-.cart-list{
-max-height:420px;
-overflow:auto;
-display:flex;
-flex-direction:column;
-gap:8px
-}
-
-.cart-item{
-display:flex;
-justify-content:space-between;
+color:white;
 padding:8px;
-border:1px dashed #eee;
-border-radius:8px
+border-radius:6px;
+cursor:pointer;
+width:100%;
+
 }
 
-.total-row{
+button:hover{
+background:#125aa0;
+}
+
+.carrinho{
+
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+
+background:white;
+padding:10px;
+
+box-shadow:0 -4px 10px rgba(0,0,0,0.2);
+
 display:flex;
 justify-content:space-between;
-padding:10px 0;
-font-weight:700
+align-items:center;
+
 }
 
-textarea{
-width:100%;
-border-radius:8px;
-border:1px solid #ddd;
-padding:8px
-}
 </style>
+
 </head>
 
 <body>
 
 <header>
-<img src="imagens/garrocha.png" class="logo">
-<h1>Cardápio — Espetos, Bebidas e Lanches</h1>
-<p>Toque para adicionar ao carrinho</p>
+🔥 Garrocha Espetos
 </header>
 
 <div class="container">
-<div class="layout">
 
-<main>
+<!-- ESPETOS -->
 
-<div class="card">
+<div class="categoria">
+
 <h2>🍢 Espetos</h2>
-<div class="grid-catalog" id="catalog-espetos"></div>
-</div>
+
+<div class="grid">
 
 <div class="card">
+
+<img src="imagens/carne.jpg">
+
+<div class="info">
+
+<div class="nome">Espeto de Carne</div>
+
+<div class="preco">R$ 21,00</div>
+
+<button onclick="add('Espeto de Carne',21)">Adicionar</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<video controls>
+
+<source src="videos/tulipa.mp4" type="video/mp4">
+
+</video>
+
+<div class="info">
+
+<div class="nome">Tulipa</div>
+
+<div class="preco">R$ 13,00</div>
+
+<button onclick="add('Tulipa',13)">Adicionar</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- BEBIDAS -->
+
+<div class="categoria">
+
 <h2>🥤 Bebidas</h2>
-<div class="grid-catalog" id="catalog-bebidas"></div>
-</div>
 
-</main>
+<div class="grid">
 
-<aside class="card cart">
+<div class="card">
 
-<h3>Seu Pedido</h3>
+<img src="imagens/coca.jpg">
 
-<div class="cart-list" id="cartList"></div>
+<div class="info">
 
-<div class="total-row">
-<span>Total</span>
-<span id="grandTotal">R$ 0,00</span>
-</div>
+<div class="nome">Coca Cola Lata</div>
 
-<textarea id="note" rows="3" placeholder="Observações ou endereço"></textarea>
+<div class="preco">R$ 7,00</div>
 
-<button id="whatsappBtn" class="add-btn">
-Enviar via WhatsApp
-</button>
-
-</aside>
+<button onclick="add('Coca Lata',7)">Adicionar</button>
 
 </div>
+
 </div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CARRINHO -->
+
+<div class="carrinho">
+
+<div id="total">Total: R$ 0,00</div>
+
+<button onclick="whats()">Enviar Pedido</button>
+
+</div>
+
 
 <script>
 
-const PHONE="5547991529698"
-
-const CATALOG={
-espetos:["CARNE","FRANGO","CALABRESA","TULIPA","QUEIJO"],
-bebidas:["COCA LATA","GUARANÁ LATA","ÁGUA"]
-}
-
-const PRICES={
-"CARNE":21,
-"FRANGO":19,
-"CALABRESA":18,
-"TULIPA":13,
-"QUEIJO":10,
-"COCA LATA":7,
-"GUARANÁ LATA":6,
-"ÁGUA":4
-}
-
-function money(v){
-return "R$ "+v.toFixed(2).replace(".",",")
-}
-
-function imageName(name){
-return name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")+".jpg"
-}
-
-const state={cart:{}}
-
-function renderSection(id,items){
-
-const div=document.getElementById(id)
-div.innerHTML=""
-
-items.forEach(name=>{
-
-const price=PRICES[name]||0
-const file=imageName(name)
-
-div.innerHTML+=`
-<div class="item-card">
-
-<img src="imagens/${file}"
-onerror="this.outerHTML='<div class=no-image>Sem imagem</div>'">
-
-<div class="item-name">${name}</div>
-
-<div class="item-meta">${money(price)}</div>
-
-<button class="add-btn" onclick="addToCart('${name}',${price})">
-Adicionar
-</button>
-
-</div>
-`
-
-})
-
-}
-
-function addToCart(name,price){
-
-if(!state.cart[name])
-state.cart[name]={name,price,qtd:0}
-
-state.cart[name].qtd++
-
-renderCart()
-
-}
-
-function renderCart(){
-
-const list=document.getElementById("cartList")
-
-list.innerHTML=""
-
+let carrinho=[]
 let total=0
 
-Object.values(state.cart).forEach(it=>{
+function add(nome,preco){
 
-total+=it.price*it.qtd
+carrinho.push(nome)
 
-list.innerHTML+=`
-<div class="cart-item">
-${it.name} x${it.qtd}
-<button onclick="removeItem('${it.name}')">❌</button>
-</div>
-`
+total+=preco
 
-})
-
-document.getElementById("grandTotal").innerText=money(total)
+document.getElementById("total").innerHTML="Total: R$ "+total.toFixed(2)
 
 }
 
-function removeItem(name){
-
-delete state.cart[name]
-
-renderCart()
-
-}
-
-function buildMessage(){
+function whats(){
 
 let msg="Pedido Garrocha:%0A"
 
-Object.values(state.cart).forEach(it=>{
-msg+=`- ${it.name} x${it.qtd}%0A`
+carrinho.forEach(item=>{
+msg+=item+"%0A"
 })
 
-msg+=`%0AObs: ${document.getElementById("note").value}`
+msg+="%0ATotal: R$ "+total.toFixed(2)
 
-return msg
-
-}
-
-document.getElementById("whatsappBtn").onclick=()=>{
-
-window.open(
-`https://wa.me/${PHONE}?text=${buildMessage()}`
-)
+window.open("https://wa.me/5547991529698?text="+msg)
 
 }
-
-renderSection("catalog-espetos",CATALOG.espetos)
-renderSection("catalog-bebidas",CATALOG.bebidas)
 
 </script>
 
