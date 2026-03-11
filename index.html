@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Garrocha Cardápio</title>
+<title>Garrocha Espetos</title>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial;
-background:#f5f5f5;
+background:#f4f4f4;
 }
 
 header{
 background:#8B0000;
 color:white;
-padding:16px;
 text-align:center;
+padding:16px;
 font-size:20px;
 font-weight:bold;
 }
@@ -43,29 +44,14 @@ gap:15px;
 .card{
 background:white;
 border-radius:12px;
-overflow:hidden;
 box-shadow:0 4px 10px rgba(0,0,0,0.1);
-display:flex;
-flex-direction:column;
-}
-
-.carousel{
-position:relative;
-height:150px;
 overflow:hidden;
 }
 
-.carousel img{
+.card img{
 width:100%;
 height:150px;
 object-fit:cover;
-position:absolute;
-opacity:0;
-transition:opacity 0.4s;
-}
-
-.carousel img.active{
-opacity:1;
 }
 
 .info{
@@ -78,7 +64,7 @@ font-weight:bold;
 
 .preco{
 color:#666;
-margin:6px 0;
+margin:5px 0;
 }
 
 .controles{
@@ -95,8 +81,15 @@ cursor:pointer;
 font-size:16px;
 }
 
-.btnAdd{background:#1976d2;color:white}
-.btnSub{background:#999;color:white}
+.btnAdd{
+background:#1976d2;
+color:white;
+}
+
+.btnSub{
+background:#888;
+color:white;
+}
 
 .carrinho{
 position:fixed;
@@ -108,6 +101,7 @@ padding:12px;
 box-shadow:0 -4px 10px rgba(0,0,0,0.2);
 display:flex;
 justify-content:space-between;
+align-items:center;
 }
 
 </style>
@@ -130,174 +124,46 @@ justify-content:space-between;
 
 <div class="grid">
 
-<div class="card">
-
-<div class="carousel" id="carne">
-
-<img src="imagens/carne1.jpg" class="active">
-<img src="imagens/carne2.jpg">
-<img src="imagens/carne3.jpg">
-
-</div>
-
-<div class="info">
-
-<div class="nome">Espeto de Carne</div>
-
-<div class="preco">R$21</div>
-
-<div class="controles">
-
-<button class="btnSub" onclick="removeItem('Carne',21)">-</button>
-
-<span id="Carne">0</span>
-
-<button class="btnAdd" onclick="addItem('Carne',21)">+</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="carousel" id="frango">
-
-<img src="imagens/frango1.jpg" class="active">
-<img src="imagens/frango2.jpg">
-
-</div>
-
-<div class="info">
-
-<div class="nome">Espeto de Frango</div>
-
-<div class="preco">R$19</div>
-
-<div class="controles">
-
-<button class="btnSub" onclick="removeItem('Frango',19)">-</button>
-
-<span id="Frango">0</span>
-
-<button class="btnAdd" onclick="addItem('Frango',19)">+</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-<div class="info">
-<div class="nome">Coração de Frango</div>
-<div class="preco">R$12</div>
-<div class="controles">
-<button class="btnSub" onclick="removeItem('Coração',12)">-</button>
-<span id="Coração">0</span>
-<button class="btnAdd" onclick="addItem('Coração',12)">+</button>
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="info">
-<div class="nome">Tri Misto</div>
-<div class="preco">R$23</div>
-<div class="controles">
-<button class="btnSub" onclick="removeItem('Tri',23)">-</button>
-<span id="Tri">0</span>
-<button class="btnAdd" onclick="addItem('Tri',23)">+</button>
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="info">
-<div class="nome">Pão de Alho</div>
-<div class="preco">R$6</div>
-<div class="controles">
-<button class="btnSub" onclick="removeItem('PaoAlho',6)">-</button>
-<span id="PaoAlho">0</span>
-<button class="btnAdd" onclick="addItem('PaoAlho',6)">+</button>
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="info">
-<div class="nome">Queijo</div>
-<div class="preco">R$10</div>
-<div class="controles">
-<button class="btnSub" onclick="removeItem('Queijo',10)">-</button>
-<span id="Queijo">0</span>
-<button class="btnAdd" onclick="addItem('Queijo',10)">+</button>
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="info">
-<div class="nome">Milho Assado</div>
-<div class="preco">R$10</div>
-<div class="controles">
-<button class="btnSub" onclick="removeItem('Milho',10)">-</button>
-<span id="Milho">0</span>
-<button class="btnAdd" onclick="addItem('Milho',10)">+</button>
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="info">
-<div class="nome">Dupla Linguiça</div>
-<div class="preco">R$18</div>
-<div class="controles">
-<button class="btnSub" onclick="removeItem('Linguiça',18)">-</button>
-<span id="Linguiça">0</span>
-<button class="btnAdd" onclick="addItem('Linguiça',18)">+</button>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-
-<!-- SUCOS -->
-
-<div class="categoria">
-
-<h2>🥤 Sucos</h2>
-
-<div class="grid">
-
 <script>
 
-const sucos=[
-"Cupuaçu","Maracujá","Graviola","Goiaba","Acerola","Laranja","Cajá"
+const espetos=[
+
+["Espeto de Carne",21],
+["Espeto de Frango",19],
+["Coração de Frango",12],
+["Tri Misto",23],
+["Pão de Alho",6],
+["Queijo",10],
+["Milho Assado",10],
+["Dupla Linguiça",18]
+
 ]
 
-sucos.forEach(suco=>{
+espetos.forEach(item=>{
+
+let nome=item[0]
+let preco=item[1]
+let id=nome.replace(/\s/g,'')
 
 document.write(`
 
 <div class="card">
 
+<img src="imagens/${id}.jpg" onerror="this.style.display='none'">
+
 <div class="info">
 
-<div class="nome">${suco}</div>
+<div class="nome">${nome}</div>
 
-<div class="preco">R$15</div>
+<div class="preco">R$${preco}</div>
 
 <div class="controles">
 
-<button class="btnSub" onclick="removeItem('${suco}',15)">-</button>
+<button class="btnSub" onclick="removeItem('${id}',${preco})">-</button>
 
-<span id="${suco}">0</span>
+<span id="${id}">0</span>
 
-<button class="btnAdd" onclick="addItem('${suco}',15)">+</button>
+<button class="btnAdd" onclick="addItem('${id}',${preco})">+</button>
 
 </div>
 
@@ -315,6 +181,67 @@ document.write(`
 
 </div>
 
+<!-- SUCOS -->
+
+<div class="categoria">
+
+<h2>🥤 Sucos</h2>
+
+<div class="grid">
+
+<script>
+
+const sucos=[
+
+"Cupuaçu",
+"Maracujá",
+"Graviola",
+"Goiaba",
+"Acerola",
+"Laranja",
+"Cajá"
+
+]
+
+sucos.forEach(nome=>{
+
+let id=nome.replace(/\s/g,'')
+
+document.write(`
+
+<div class="card">
+
+<img src="imagens/${id}.jpg" onerror="this.style.display='none'">
+
+<div class="info">
+
+<div class="nome">${nome}</div>
+
+<div class="preco">R$15</div>
+
+<div class="controles">
+
+<button class="btnSub" onclick="removeItem('${id}',15)">-</button>
+
+<span id="${id}">0</span>
+
+<button class="btnAdd" onclick="addItem('${id}',15)">+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`)
+
+})
+
+</script>
+
+</div>
+
+</div>
 
 <!-- COXINHAS -->
 
@@ -324,57 +251,43 @@ document.write(`
 
 <div class="grid">
 
+<script>
+
+const coxinhas=[
+
+"Calabresa e Queijo",
+"Carne",
+"Carne Queijo",
+"Carne com Ovo",
+"Pizza",
+"Frango com Catupiry",
+"Frango"
+
+]
+
+coxinhas.forEach(nome=>{
+
+let id=nome.replace(/\s/g,'')
+
+document.write(`
+
 <div class="card">
 
-<div class="carousel" id="coxcarne">
-
-<img src="imagens/coxcarne1.jpg" class="active">
-<img src="imagens/coxcarne2.jpg">
-
-</div>
+<img src="imagens/${id}.jpg" onerror="this.style.display='none'">
 
 <div class="info">
 
-<div class="nome">Carne</div>
+<div class="nome">${nome}</div>
 
 <div class="preco">R$7</div>
 
 <div class="controles">
 
-<button onclick="removeItem('CoxCarne',7)">-</button>
+<button class="btnSub" onclick="removeItem('${id}',7)">-</button>
 
-<span id="CoxCarne">0</span>
+<span id="${id}">0</span>
 
-<button onclick="addItem('CoxCarne',7)">+</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="carousel" id="coxfrango">
-
-<img src="imagens/coxfrango1.jpg" class="active">
-<img src="imagens/coxfrango2.jpg">
-
-</div>
-
-<div class="info">
-
-<div class="nome">Frango</div>
-
-<div class="preco">R$7</div>
-
-<div class="controles">
-
-<button onclick="removeItem('CoxFrango',7)">-</button>
-
-<span id="CoxFrango">0</span>
-
-<button onclick="addItem('CoxFrango',7)">+</button>
+<button class="btnAdd" onclick="addItem('${id}',7)">+</button>
 
 </div>
 
@@ -382,12 +295,17 @@ document.write(`
 
 </div>
 
-</div>
+`)
+
+})
+
+</script>
 
 </div>
 
 </div>
 
+</div>
 
 <div class="carrinho">
 
@@ -396,7 +314,6 @@ document.write(`
 <button onclick="enviar()">Enviar Pedido</button>
 
 </div>
-
 
 <script>
 
@@ -458,34 +375,6 @@ msg+="%0ATotal: R$"+total.toFixed(2)
 window.open("https://wa.me/5547991529698?text="+msg)
 
 }
-
-
-function startCarousel(id){
-
-let box=document.getElementById(id)
-
-if(!box) return
-
-let imgs=box.querySelectorAll("img")
-
-let index=0
-
-setInterval(()=>{
-
-imgs[index].classList.remove("active")
-
-index=(index+1)%imgs.length
-
-imgs[index].classList.add("active")
-
-},2500)
-
-}
-
-startCarousel("carne")
-startCarousel("frango")
-startCarousel("coxcarne")
-startCarousel("coxfrango")
 
 </script>
 
