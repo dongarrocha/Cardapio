@@ -1,329 +1,189 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Garrocha</title>
+<title>Garrocha Espetos</title>
 
 <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
 
 body{
-margin:0;
-font-family:Arial;
-background:#f6f6f6;
+    background:#f8f8f8;
+    color:#333;
 }
 
 header{
-background:#8B0000;
-color:white;
-padding:16px;
-text-align:center;
-font-weight:bold;
+    background:#8B0000;
+    color:white;
+    text-align:center;
+    padding:20px;
 }
 
-.tabs{
-display:flex;
-overflow-x:auto;
-background:white;
-padding:10px;
-gap:10px;
-position:sticky;
-top:0;
-z-index:10;
+header h1{
+    font-size:24px;
 }
 
-.tab{
-background:#eee;
-padding:8px 14px;
-border-radius:20px;
-cursor:pointer;
-white-space:nowrap;
-}
-
-.tab.active{
-background:#8B0000;
-color:white;
+header p{
+    font-size:14px;
+    margin-top:5px;
 }
 
 .container{
-padding:10px;
+    width:90%;
+    max-width:900px;
+    margin:20px auto;
 }
 
 .section{
-margin-bottom:30px;
+    margin-bottom:30px;
+}
+
+.section h2{
+    margin-bottom:15px;
+    color:#8B0000;
+    border-bottom:2px solid #ddd;
+    padding-bottom:8px;
 }
 
 .item{
-display:flex;
-background:white;
-border-radius:10px;
-margin-bottom:10px;
-padding:10px;
-align-items:center;
-box-shadow:0 2px 6px rgba(0,0,0,0.08);
+    background:white;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:12px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.08);
 }
 
 .item img{
-width:80px;
-height:80px;
-object-fit:cover;
-border-radius:8px;
-margin-right:10px;
+    width:80px;
+    height:80px;
+    object-fit:cover;
+    border-radius:8px;
 }
 
 .info{
-flex:1;
+    flex:1;
 }
 
 .nome{
-font-weight:bold;
+    font-weight:bold;
+    font-size:16px;
 }
 
 .preco{
-color:#666;
-margin-top:5px;
+    color:#666;
+    margin-top:5px;
 }
 
-.controls{
-display:flex;
-align-items:center;
-gap:8px;
+footer{
+    text-align:center;
+    padding:20px;
+    background:white;
+    margin-top:20px;
+    font-size:14px;
 }
-
-button{
-border:none;
-padding:6px 10px;
-border-radius:6px;
-cursor:pointer;
-}
-
-.add{background:#1976d2;color:white}
-.sub{background:#999;color:white}
-
-.cart{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:white;
-padding:12px;
-display:flex;
-justify-content:space-between;
-box-shadow:0 -3px 10px rgba(0,0,0,0.2);
-}
-
 </style>
-
 </head>
 
 <body>
 
 <header>
-🔥 Garrocha Espetos
+    <h1>🔥 Garrocha Espetos</h1>
+    <p>Cardápio para visualização</p>
 </header>
-
-<div class="tabs">
-<div class="tab active" onclick="scrollToSection('espetos')">Espetos</div>
-<div class="tab" onclick="scrollToSection('sucos')">Sucos</div>
-<div class="tab" onclick="scrollToSection('coxinhas')">Coxinhas</div>
-</div>
 
 <div class="container">
 
-<!-- ESPETOS -->
+    <div class="section">
+        <h2>🍢 Espetos</h2>
+        <div id="espetos"></div>
+    </div>
 
-<div id="espetos" class="section">
-<h3>🍢 Espetos</h3>
+    <div class="section">
+        <h2>🥤 Sucos</h2>
+        <div id="sucos"></div>
+    </div>
+
+    <div class="section">
+        <h2>🥟 Coxinhas</h2>
+        <div id="coxinhas"></div>
+    </div>
+
+</div>
+
+<footer>
+    Garrocha Espetos © 2026
+</footer>
 
 <script>
 
-const espetos=[
-["Espeto de Carne",21],
-["Espeto de Frango",19],
-["Coração de Frango",12],
-["Tri Misto",23],
-["Pão de Alho",6],
-["Queijo",10],
-["Milho Assado",10],
-["Dupla Linguiça",18]
-]
+const produtos = {
+    espetos: [
+        ["Espeto de Carne", 21],
+        ["Espeto de Frango", 19],
+        ["Coração de Frango", 12],
+        ["Tri Misto", 23],
+        ["Pão de Alho", 6],
+        ["Queijo", 10],
+        ["Milho Assado", 10],
+        ["Dupla Linguiça", 18]
+    ],
 
-espetos.forEach(item=>{
-let nome=item[0]
-let preco=item[1]
-let id=nome.replace(/\s/g,'')
+    sucos: [
+        ["Cupuaçu", 15],
+        ["Maracujá", 15],
+        ["Graviola", 15],
+        ["Goiaba", 15],
+        ["Acerola", 15],
+        ["Laranja", 15],
+        ["Cajá", 15]
+    ],
 
-document.write(`
+    coxinhas: [
+        ["Calabresa e Queijo", 7],
+        ["Carne", 7],
+        ["Carne Queijo", 7],
+        ["Carne com Ovo", 7],
+        ["Pizza", 7],
+        ["Frango com Catupiry", 7],
+        ["Frango", 7]
+    ]
+};
 
-<div class="item">
+function renderSection(sectionId, items){
+    const container = document.getElementById(sectionId);
 
-<img src="imagens/${id}.jpg" onerror="this.style.display='none'">
+    items.forEach(item => {
+        let nome = item[0];
+        let preco = item[1];
+        let id = nome.replace(/\s/g,'');
 
-<div class="info">
-<div class="nome">${nome}</div>
-<div class="preco">R$${preco}</div>
-</div>
+        container.innerHTML += `
+            <div class="item">
+                <img src="imagens/${id}.jpg" 
+                     onerror="this.style.display='none'">
 
-<div class="controls">
-<button class="sub" onclick="removeItem('${id}',${preco})">-</button>
-<span id="${id}">0</span>
-<button class="add" onclick="addItem('${id}',${preco})">+</button>
-</div>
-
-</div>
-
-`)
-
-})
-
-</script>
-
-</div>
-
-<!-- SUCOS -->
-
-<div id="sucos" class="section">
-<h3>🥤 Sucos</h3>
-
-<script>
-
-const sucos=[
-"Cupuaçu","Maracujá","Graviola","Goiaba","Acerola","Laranja","Cajá"
-]
-
-sucos.forEach(nome=>{
-
-let id=nome.replace(/\s/g,'')
-
-document.write(`
-
-<div class="item">
-
-<img src="imagens/${id}.jpg" onerror="this.style.display='none'">
-
-<div class="info">
-<div class="nome">${nome}</div>
-<div class="preco">R$15</div>
-</div>
-
-<div class="controls">
-<button class="sub" onclick="removeItem('${id}',15)">-</button>
-<span id="${id}">0</span>
-<button class="add" onclick="addItem('${id}',15)">+</button>
-</div>
-
-</div>
-
-`)
-
-})
-
-</script>
-
-</div>
-
-<!-- COXINHAS -->
-
-<div id="coxinhas" class="section">
-<h3>🥟 Coxinhas</h3>
-
-<script>
-
-const coxinhas=[
-"Calabresa e Queijo",
-"Carne",
-"Carne Queijo",
-"Carne com Ovo",
-"Pizza",
-"Frango com Catupiry",
-"Frango"
-]
-
-coxinhas.forEach(nome=>{
-
-let id=nome.replace(/\s/g,'')
-
-document.write(`
-
-<div class="item">
-
-<img src="imagens/${id}.jpg" onerror="this.style.display='none'">
-
-<div class="info">
-<div class="nome">${nome}</div>
-<div class="preco">R$7</div>
-</div>
-
-<div class="controls">
-<button class="sub" onclick="removeItem('${id}',7)">-</button>
-<span id="${id}">0</span>
-<button class="add" onclick="addItem('${id}',7)">+</button>
-</div>
-
-</div>
-
-`)
-
-})
-
-</script>
-
-</div>
-
-</div>
-
-<div class="cart">
-<div id="total">Total: R$0</div>
-<button onclick="enviar()">Enviar</button>
-</div>
-
-<script>
-
-let carrinho={}
-let total=0
-
-function addItem(nome,preco){
-if(!carrinho[nome]) carrinho[nome]=0
-carrinho[nome]++
-document.getElementById(nome).innerText=carrinho[nome]
-total+=preco
-update()
+                <div class="info">
+                    <div class="nome">${nome}</div>
+                    <div class="preco">R$ ${preco}</div>
+                </div>
+            </div>
+        `;
+    });
 }
 
-function removeItem(nome,preco){
-if(carrinho[nome]>0){
-carrinho[nome]--
-document.getElementById(nome).innerText=carrinho[nome]
-total-=preco
-update()
-}
-}
-
-function update(){
-document.getElementById("total").innerText="Total: R$"+total.toFixed(2)
-}
-
-function enviar(){
-
-let msg="Pedido Garrocha:%0A"
-
-for(let item in carrinho){
-if(carrinho[item]>0){
-msg+=item+" x"+carrinho[item]+"%0A"
-}
-}
-
-msg+="%0ATotal: R$"+total.toFixed(2)
-
-window.open("https://wa.me/5547991529698?text="+msg)
-
-}
-
-function scrollToSection(id){
-document.getElementById(id).scrollIntoView({behavior:"smooth"})
-}
+renderSection("espetos", produtos.espetos);
+renderSection("sucos", produtos.sucos);
+renderSection("coxinhas", produtos.coxinhas);
 
 </script>
 
