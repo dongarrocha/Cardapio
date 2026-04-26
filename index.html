@@ -2,323 +2,393 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Garrocha Cardápio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Garrocha Espetos</title>
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
 }
 
 body{
-    background:#f7f7f7;
-    padding-bottom:120px;
+background:#f5f5f5;
+padding-bottom:140px;
 }
 
-/* HEADER */
 header{
-    background:#8B0000;
-    color:white;
-    text-align:center;
-    padding:15px;
-    position:sticky;
-    top:0;
-    z-index:100;
+background:#8B0000;
+color:white;
+text-align:center;
+padding:15px;
+position:sticky;
+top:0;
+z-index:100;
 }
 
 header h1{
-    font-size:20px;
+font-size:22px;
 }
 
-header p{
-    font-size:13px;
-    margin-top:5px;
-}
-
-/* CONTAINER */
 .container{
-    width:100%;
-    padding:10px;
+padding:10px;
 }
 
-/* SEÇÕES */
 .card{
-    background:white;
-    padding:12px;
-    border-radius:12px;
-    margin-bottom:15px;
+background:white;
+padding:12px;
+border-radius:12px;
+margin-bottom:15px;
 }
 
 .section-title{
-    margin-bottom:10px;
-    font-size:18px;
+font-size:20px;
+margin-bottom:10px;
 }
 
-/* GRID MOBILE */
 .grid-catalog{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:12px;
+display:grid;
+grid-template-columns:1fr;
+gap:12px;
 }
 
-/* TABLET */
-@media(min-width:600px){
-    .grid-catalog{
-        grid-template-columns:repeat(2,1fr);
-    }
+@media(min-width:700px){
+.grid-catalog{
+grid-template-columns:repeat(2,1fr);
 }
-
-/* DESKTOP */
-@media(min-width:1000px){
-    .grid-catalog{
-        grid-template-columns:repeat(3,1fr);
-    }
 }
 
 .item-card{
-    background:white;
-    border:1px solid #eee;
-    border-radius:12px;
-    padding:10px;
-    text-align:center;
+background:white;
+border:1px solid #ddd;
+padding:10px;
+border-radius:12px;
+text-align:center;
 }
 
 .item-card img{
-    width:100%;
-    height:180px;
-    object-fit:cover;
-    border-radius:10px;
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:10px;
 }
 
 .no-image{
-    height:180px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#eee;
-    border-radius:10px;
-    color:#777;
+height:180px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#eee;
+border-radius:10px;
 }
 
 .item-name{
-    margin-top:10px;
-    font-weight:bold;
+margin-top:10px;
+font-weight:bold;
 }
 
-.item-meta{
-    margin-top:5px;
-    color:#555;
+.item-price{
+margin-top:5px;
+color:#555;
 }
 
-/* BOTÃO */
+.actions{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+.actions button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:8px;
+color:white;
+font-weight:bold;
+}
+
 .add-btn{
-    width:100%;
-    margin-top:10px;
-    background:#1976d2;
-    color:white;
-    border:none;
-    padding:12px;
-    border-radius:8px;
-    font-size:15px;
+background:#1976d2;
 }
 
-/* CARRINHO MOBILE FIXO */
-.cart-mobile{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    background:white;
-    box-shadow:0 -2px 10px rgba(0,0,0,0.2);
-    padding:15px;
-    z-index:999;
+.remove-btn{
+background:#d32f2f;
+}
+
+.disabled-btn{
+background:gray;
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+color:white;
+margin-top:10px;
+}
+
+/* carrinho fixo */
+.cart-bar{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:white;
+padding:15px;
+box-shadow:0 -2px 10px rgba(0,0,0,0.2);
+z-index:999;
 }
 
 .cart-info{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:10px;
-    font-weight:bold;
+display:flex;
+justify-content:space-between;
+font-weight:bold;
+margin-bottom:10px;
 }
 
-.cart-btn{
-    width:100%;
-    background:#25D366;
-    color:white;
-    border:none;
-    padding:14px;
-    font-size:16px;
-    border-radius:10px;
+.whatsapp-btn{
+width:100%;
+padding:14px;
+background:#25D366;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
+font-weight:bold;
 }
 </style>
 </head>
 <body>
 
 <header>
-    <h1>🍢 Garrocha Espetos</h1>
-    <p>Faça seu pedido rapidamente</p>
+<h1>🍢 Garrocha Espetos</h1>
+<p>Faça seu pedido</p>
 </header>
 
-<div class="container">
+<div class="container" id="menu"></div>
 
-    <div class="card">
-        <h2 class="section-title">Espetos</h2>
-        <div class="grid-catalog" id="catalog-espetos"></div>
-    </div>
-
-    <div class="card">
-        <h2 class="section-title">Bebidas</h2>
-        <div class="grid-catalog" id="catalog-bebidas"></div>
-    </div>
-
-    <div class="card">
-        <h2 class="section-title">Sobremesas</h2>
-        <div class="grid-catalog" id="catalog-sobremesas"></div>
-    </div>
-
+<div class="cart-bar">
+<div class="cart-info">
+<span id="totalItems">0 itens</span>
+<span id="totalPrice">R$ 0,00</span>
 </div>
 
-<!-- carrinho fixo -->
-<div class="cart-mobile">
-    <div class="cart-info">
-        <span id="itemsTotal">0 itens</span>
-        <span id="grandTotal">R$ 0,00</span>
-    </div>
-
-    <button id="whatsappBtn" class="cart-btn">
-        Finalizar no WhatsApp
-    </button>
+<button class="whatsapp-btn" onclick="sendWhatsapp()">
+Finalizar Pedido
+</button>
 </div>
 
 <script>
-const PHONE='5547991529698';
+const PHONE = "5547991529698";
 
-const INDISPONIVEIS=['TULIPA','PUDIM'];
+const INDISPONIVEIS = ["TULIPA","PUDIM"];
 
-const CATALOG={
-    espetos:['CARNE','CARNE C BACON','CARNE E FRANGO','CALABRESA'],
-    bebidas:['COCA LATA','GUARANÁ LATA','SUCO CUPUAÇU'],
-    sobremesas:['AÇAÍ','PUDIM']
+const CATALOG = {
+espetos:[
+'CARNE','CARNE C BACON','CARNE E FRANGO','CARNE C QUEIJO',
+'CARNE E CALABRESA','CALABRESA','FRANGO','FRANGO C BACON',
+'FRANGO C QUEIJO','FRANGO E CALABRESA','CORAÇÃO BOVINO',
+'CORAÇÃO FGO','TULIPA','TRI MISTO','PÃO DE ALHO',
+'QUEIJO','QUEIJO C BACON','MILHO'
+],
+
+bebidas:[
+'COCA 600','COCA LATA','COCA ZERO LATA','FANTA LATA',
+'GUARANÁ LATA','UVA LATA','HEINEKEN','SPATEN',
+'BUDWEISER','SUCO CUPUAÇU','SUCO ACEROLA',
+'SUCO GRAVIOLA','SUCO MARACUJÁ',
+'ÁGUA C GÁS','ÁGUA S GÁS'
+],
+
+sobremesas:[
+'AÇAÍ','PUDIM'
+],
+
+lanches:[
+'PÃO BOVINO','PÃO DE CALABRESA',
+'PÃO DE CORAÇÃO','PÃO ESPECIAL'
+],
+
+acompanhamentos:[
+'ARROZ VINAGRETE E FAROFA',
+'CALDO DE AIPIM CALABRESA E BACON',
+'TALHARIM'
+]
 };
 
-const PRICES={
-    'CARNE':21,
-    'CARNE C BACON':22,
-    'CARNE E FRANGO':20,
-    'CALABRESA':16,
-    'COCA LATA':7,
-    'GUARANÁ LATA':6,
-    'SUCO CUPUAÇU':15,
-    'AÇAÍ':20,
-    'PUDIM':15
+const PRICES = {
+'CARNE':21,
+'CARNE C BACON':22,
+'CARNE E FRANGO':20,
+'CARNE C QUEIJO':22,
+'CARNE E CALABRESA':20,
+'CALABRESA':16,
+'FRANGO':18,
+'FRANGO C BACON':20,
+'FRANGO C QUEIJO':22,
+'FRANGO E CALABRESA':20,
+'CORAÇÃO BOVINO':15,
+'CORAÇÃO FGO':12,
+'TULIPA':13,
+'TRI MISTO':23,
+'PÃO DE ALHO':6,
+'QUEIJO':10,
+'QUEIJO C BACON':14,
+'MILHO':10,
+'COCA 600':12,
+'COCA LATA':7,
+'COCA ZERO LATA':7,
+'FANTA LATA':7,
+'GUARANÁ LATA':6,
+'UVA LATA':6,
+'HEINEKEN':12,
+'SPATEN':12,
+'BUDWEISER':12,
+'SUCO CUPUAÇU':15,
+'SUCO ACEROLA':15,
+'SUCO GRAVIOLA':15,
+'SUCO MARACUJÁ':15,
+'ÁGUA C GÁS':4,
+'ÁGUA S GÁS':4,
+'AÇAÍ':20,
+'PUDIM':15,
+'PÃO BOVINO':28,
+'PÃO DE CALABRESA':25,
+'PÃO DE CORAÇÃO':23,
+'PÃO ESPECIAL':30,
+'ARROZ VINAGRETE E FAROFA':5,
+'CALDO DE AIPIM CALABRESA E BACON':15,
+'TALHARIM':15
 };
 
-const cart={};
+let cart = {};
+
+function money(v){
+return "R$ " + v.toFixed(2).replace(".",",");
+}
 
 function removeAccents(str){
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+return str.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 }
 
 function imageExists(url){
-    const xhr=new XMLHttpRequest();
-    xhr.open("HEAD",url,false);
-    xhr.send();
-    return xhr.status!==404;
+try{
+let xhr = new XMLHttpRequest();
+xhr.open("HEAD",url,false);
+xhr.send();
+return xhr.status !== 404;
+}catch{
+return false;
+}
 }
 
 function getImage(name){
-    const clean=removeAccents(name).toLowerCase();
-    const formats=['jpg','jpeg','png','webp'];
+let clean = removeAccents(name).toLowerCase();
+let formats = ["jpg","jpeg","png","webp","avif"];
 
-    for(let ext of formats){
-        let path=`imagens/${clean}.${ext}`;
-        if(imageExists(path)){
-            return path;
-        }
-    }
-    return null;
+for(let ext of formats){
+let path = `imagens/${clean}.${ext}`;
+if(imageExists(path)){
+return path;
+}
 }
 
-function money(v){
-    return "R$ "+v.toFixed(2).replace(".",",");
+return null;
 }
 
-function render(section,data){
-    const div=document.getElementById(section);
-    div.innerHTML='';
-
-    data.forEach(item=>{
-        const img=getImage(item);
-        const indisponivel=INDISPONIVEIS.includes(item);
-
-        div.innerHTML+=`
-        <div class="item-card">
-            ${
-                img
-                ? `<img src="${img}">`
-                : `<div class="no-image">Sem imagem</div>`
-            }
-
-            <div class="item-name" style="${indisponivel ? 'text-decoration:line-through;color:red':''}">
-                ${item}
-            </div>
-
-            <div class="item-meta">
-                ${indisponivel ? 'Indisponível' : money(PRICES[item])}
-            </div>
-
-            ${
-                indisponivel
-                ? `<button class="add-btn" disabled style="background:gray;">Indisponível</button>`
-                : `<button class="add-btn" onclick="addCart('${item}')">Adicionar</button>`
-            }
-        </div>
-        `;
-    });
+function addItem(name){
+if(!cart[name]) cart[name]=0;
+cart[name]++;
+updateCart();
 }
 
-function addCart(item){
-    if(!cart[item]){
-        cart[item]=0;
-    }
+function removeItem(name){
+if(cart[name]){
+cart[name]--;
 
-    cart[item]++;
-    updateCart();
+if(cart[name] <= 0){
+delete cart[name];
+}
+}
+
+updateCart();
 }
 
 function updateCart(){
-    let total=0;
-    let items=0;
+let total=0;
+let items=0;
 
-    for(let item in cart){
-        items += cart[item];
-        total += cart[item]*PRICES[item];
-    }
-
-    document.getElementById('itemsTotal').innerText=items+" itens";
-    document.getElementById('grandTotal').innerText=money(total);
+for(let item in cart){
+items += cart[item];
+total += cart[item]*PRICES[item];
 }
 
-function buildMessage(){
-    let msg="Pedido Garrocha:%0A";
-
-    for(let item in cart){
-        msg += `${item} x${cart[item]}%0A`;
-    }
-
-    return msg;
+document.getElementById("totalItems").innerText = items+" itens";
+document.getElementById("totalPrice").innerText = money(total);
 }
 
-document.getElementById('whatsappBtn').onclick=function(){
-    window.open(`https://wa.me/${PHONE}?text=${buildMessage()}`);
+function renderMenu(){
+let menu = document.getElementById("menu");
+menu.innerHTML = "";
+
+for(let category in CATALOG){
+
+menu.innerHTML += `
+<div class="card">
+<h2 class="section-title">${category.toUpperCase()}</h2>
+<div class="grid-catalog" id="${category}"></div>
+</div>
+`;
+
+let container = document.getElementById(category);
+
+CATALOG[category].forEach(item=>{
+
+let img = getImage(item);
+let indisponivel = INDISPONIVEIS.includes(item);
+
+container.innerHTML += `
+<div class="item-card">
+
+${
+img
+? `<img src="${img}">`
+: `<div class="no-image">Sem imagem</div>`
 }
 
-render('catalog-espetos',CATALOG.espetos);
-render('catalog-bebidas',CATALOG.bebidas);
-render('catalog-sobremesas',CATALOG.sobremesas);
+<div class="item-name">${item}</div>
+<div class="item-price">
+${indisponivel ? "Indisponível" : money(PRICES[item])}
+</div>
+
+${
+indisponivel
+? `<button class="disabled-btn">Indisponível</button>`
+: `
+<div class="actions">
+<button class="remove-btn" onclick="removeItem('${item}')">-</button>
+<button class="add-btn" onclick="addItem('${item}')">+</button>
+</div>
+`
+}
+
+</div>
+`;
+});
+}
+}
+
+function sendWhatsapp(){
+let message="Pedido Garrocha:%0A%0A";
+
+for(let item in cart){
+message += `${item} x${cart[item]}%0A`;
+}
+
+window.open(`https://wa.me/${PHONE}?text=${message}`);
+}
+
+renderMenu();
 </script>
 
 </body>
